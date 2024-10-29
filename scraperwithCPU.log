@@ -1,0 +1,717 @@
+2024/10/28 21:39:08 Initializing scraper...
+2024/10/28 21:39:08 Starting scraper with root URL: https://www.wpelemento.com/
+2024/10/28 21:39:08 Restored 771 URLs from checkpoint
+2024/10/28 21:39:08 Processing URL: https://www.wpelemento.com/
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/#MainContent
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/wordpress-theme-bundle
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/pages/about-us
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/blogs/all
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/pages/community
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/pages/contact
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/account
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/cart
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/museum-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/bakery-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/security-services-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/construction-company-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/supermarket-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/flowers-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/restaurant-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/blogs/all/elementor-seo
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/business-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/policies/privacy-policy
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/policies/terms-of-service
+2024/10/28 21:39:09 Processing URL: https://www.wpelemento.com/#top
+2024/10/28 21:39:09 Successfully processed URL: https://www.wpelemento.com/
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/community#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/community#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/pages/community
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51118302757024:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/hardware-store-wordpress-theme.png?v=1721728298
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/business
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/agency
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/all
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/featured-themes
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/latest-themes
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/cart
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/premium
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/recently-added
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/travel
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50468919705760:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/elementor-conference-wordpress-theme.png?v=1717758215
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50468929863840:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/eco-nature-wordpress-theme.png?v=1717758266
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/ecommerce
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme#tab-2
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/eco-nature-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/policies/terms-of-service#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/policies/terms-of-service
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/policies/terms-of-service#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/policies/privacy-policy#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-seo#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/policies/privacy-policy
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/yoast-seo-plugin-in-wordpress
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-breadcrumbs
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/user-experiences
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/policies/privacy-policy#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/color-theory-in-web-design
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/wp-tutorials
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/wordpress-plugins
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/wordpress-themes
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/blogs/all/elementor-seo
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-seo#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/contact#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/security-services-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51440978100384:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/contact#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/pages/contact
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/wordpress-theme-bundle#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/security-services-wordpress-theme.png?v=1723810216
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50468941758624:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/security-services-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/all-themes-demo
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/security-services-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/museum-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/elementor-wordpress-theme-bundle.png?v=1726809590
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/about-us#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/flowers-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/business-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/security-services-wordpress-theme
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/pages/about-us
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50468920885408:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50618255540384:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51700581466272:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/bundle
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/security-services-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-website-builder-for-wordpress/
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/50468916068512:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51149931184288:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-custom-css
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/pages/about-us#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51475250708640:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51049096970400:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51667855048864:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/wordpress-chatbot-plugin
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/museum-wordpress-theme.png?v=1728042030
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/business-wordpress-theme-1.png?v=1717758199
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/wordpress-theme-bundle#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/media-carousel-widget/
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/construction-company-wordpress-theme.png?v=1724743866
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/flowers-wordpress-theme.png?v=1721279711
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/supermarket-wordpress-theme.png?v=1721908865
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/restaurant-wordpress-theme.png?v=1719234872
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/missing-style-css
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/bakery-wordpress-theme#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes#MainContent
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/elementor-startup-wordpress-theme.png?v=1717758222
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/elementor-newsletter-popup
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/OldAgeHomeHomePage.jpg?v=1727341760
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/real-estate
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/bakery
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/elementor-pro-page-builder/
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/flowers-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/business-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/wordpress-theme-bundle#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/shortcodes-in-wordpress
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/restaurant
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/freelancer
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/wordpress-theme-bundle
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cart/51605436825760:1
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/cyber-security-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/blogs
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/supermarket-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/wordpress-content-editors/
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#tab-2
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/flowers-wordpress-theme
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/flowers-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/museum-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/blog-post-with-elementor
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/business-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/wordpress-theme-bundle#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/lms-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/optimize-images-for-websites
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/wordpress-elementor-themes/
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/construction-company-wordpress-theme
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/museum-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/museum-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/business-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/cdn/shop/files/bakery-wordpress-theme.png?v=1726466998
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/flowers-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/charity
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/restaurant-wordpress-theme
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/healthcare
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all?page=2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/shoes-store-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/museum-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/bakery-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/business-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/bakery-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/green-farm-wordpress-theme
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/bakery-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all?page=3
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/coffee-shop-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#tab-2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all?page=35
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/bakery-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/equipment-rental-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#top
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/blogs/all#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/blogs/all
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/bike-shop-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=2
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/hiking-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=3
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=5
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/automobile
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/education
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/printing
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/fitness
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/news
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/saas
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/collections/wordpress-elementor-themes
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/spa
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/sports
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/cleaning-services-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/editorial-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/products/car-wash-wordpress-theme
+2024/10/28 21:39:10 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/pages/community#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/pages/community#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/cart#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/cart#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#tab-2
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#top
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/elementor-conference-wordpress-theme#MainContent
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#tab-1%20
+2024/10/28 21:39:10 Successfully processed URL: https://www.wpelemento.com/products/hardware-store-wordpress-theme#top
+2024/10/28 21:39:11 Successfully processed URL: https://www.wpelemento.com/products/museum-wordpress-theme#tab-1%20
+2024/10/28 21:39:11 Successfully processed URL: https://www.wpelemento.com/policies/privacy-policy#top
+2024/10/28 21:39:11 Successfully processed URL: https://www.wpelemento.com/products/flowers-wordpress-theme#tab-2
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#tab-1%20
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=35#MainContent
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all/elementor-website-builder-for-wordpress
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all/introduction-to-wordpress
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all/premium-wordpress-themes
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all/add-google-analytics-to-wordpress-elementor
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=35
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=34
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#top
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=1
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=33
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#tab-1%20
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#tab-2
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=35#top
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/products/shoes-store-wordpress-theme#MainContent
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all/blog-post-with-elementor#MainContent
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/business-wordpress-theme#top
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all#top
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=2#MainContent
+2024/10/28 21:39:12 Processing URL: https://www.wpelemento.com/blogs/all?page=2#MainContent
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/bakery-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/elementor-startup-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/flowers-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/business-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/wordpress-theme-bundle#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/restaurant-wordpress-theme#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/education
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/bakery-wordpress-theme#tab-1%20
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/wordpress-elementor-themes/
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/museum-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/construction-company-wordpress-theme#tab-1%20
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/bakery-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/healthcare
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/old-age-home-wordpress-theme#tab-1%20
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/supermarket-wordpress-theme#tab-2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/automobile
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/charity
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/shoes-store-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/blogs
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/saas
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/news
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/fitness
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/sports
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/spa
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/blog-post-with-elementor
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/printing
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/optimize-images-for-websites
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/bike-shop-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=5
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/coffee-shop-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/lms-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=3
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/hiking-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/cyber-security-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/editorial-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/cleaning-services-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/green-farm-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/car-wash-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/equipment-rental-wordpress-theme
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=2
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=3
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=35#top
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/elementor-website-builder-for-wordpress
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/products/shoes-store-wordpress-theme#MainContent
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/add-google-analytics-to-wordpress-elementor
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/premium-wordpress-themes
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/introduction-to-wordpress
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=2#MainContent
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=34
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all/blog-post-with-elementor#MainContent
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=1
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/collections/wordpress-elementor-themes?page=2#MainContent
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:12 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:12 Successfully processed URL: https://www.wpelemento.com/blogs/all?page=33
+2024/10/28 21:39:12 Worker shutting down gracefully
+2024/10/28 21:39:14 Reached maximum link count of 50, initiating shutdown...
+2024/10/28 21:39:14 Successfully processed URL: https://www.wpelemento.com/cdn/shop/files/bakery-wordpress-theme.png?v=1726466998
+2024/10/28 21:39:14 Worker shutting down gracefully
+2024/10/28 21:39:39 Error processing https://www.wpelemento.com/account: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:39 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51118302757024:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWTVFDNkVQMUtBNEVCSDVWSjNB": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/hardware-store-wordpress-theme.png?v=1721728298: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/agency: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/business: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/all: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/featured-themes: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/latest-themes: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/premium: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/recently-added: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/travel: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50468919705760:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWUko5Vlo5V0FDRDFUSEEwU1Ex": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/elementor-conference-wordpress-theme.png?v=1717758215: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/elementor-conference-wordpress-theme#tab-1%20: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/elementor-conference-wordpress-theme#tab-2: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/eco-nature-wordpress-theme#MainContent: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50468929863840:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWUlYySFdYQkdBUkhWSDI2SkhR": context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/eco-nature-wordpress-theme.png?v=1717758266: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/eco-nature-wordpress-theme#tab-1%20: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/ecommerce: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/eco-nature-wordpress-theme#tab-2: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/eco-nature-wordpress-theme#top: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/policies/terms-of-service#MainContent: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/policies/terms-of-service#top: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-seo#MainContent: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/policies/privacy-policy#MainContent: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/yoast-seo-plugin-in-wordpress: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/user-experiences: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/color-theory-in-web-design: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-breadcrumbs: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/wp-tutorials: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/wordpress-plugins: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/wordpress-themes: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-seo#top: context deadline exceeded (Client.Timeout or context cancellation while reading body)
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/security-services-wordpress-theme.png?v=1723810216: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/security-services-wordpress-theme#tab-2: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/OldAgeHomeHomePage.jpg?v=1727341760: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/wordpress-content-editors/: Get "https://www.wpelemento.com/blogs/all/wordpress-content-editors/": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51149931184288:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVkVQUUUyU0tBTU40OTY2VkFD": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/supermarket-wordpress-theme#tab-1%20: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/pages/all-themes-demo: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/museum-wordpress-theme#top: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/elementor-pro-page-builder/: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-custom-css: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51605436825760:1: Get "https://www.wpelemento.com/cart/51605436825760:1": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/pages/about-us#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51700581466272:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWV0dYSlExRjdBM0JTVkVDNTBH": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/pages/contact#top: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/old-age-home-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/elementor-startup-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/real-estate: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/flowers-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/supermarket-wordpress-theme.png?v=1721908865: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/business-wordpress-theme-1.png?v=1717758199: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/construction-company-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51049096970400:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWWFpUTVNOUDFLTUExOFZGVk5Z": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all?page=35#MainContent: Get "https://www.wpelemento.com/blogs/all?page=35#MainContent": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/flowers-wordpress-theme#tab-1%20: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/restaurant: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/bakery: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/security-services-wordpress-theme#tab-1%20: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/wordpress-chatbot-plugin: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-newsletter-popup: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/elementor-website-builder-for-wordpress/: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/pages/contact#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50468941758624:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVkNLMldNNEJIQVdKN05DSkRZ": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51440978100384:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVjFWWVhXRTBIU1BDS1czWkJG": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/pages/about-us#top: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/wordpress-theme-bundle#tab-2: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/security-services-wordpress-theme#top: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/bootstrap-to-wordpress#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/elementor-wordpress-theme-bundle.png?v=1726809590: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/security-services-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/elementor-startup-wordpress-theme.png?v=1717758222: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/museum-wordpress-theme.png?v=1728042030: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/bakery-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50468920885408:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVzA1WjA5RFY3NE5TOTNZSjc5": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50468916068512:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWWDJUMUVHOE5EQVJBRE1XQkZO": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/wordpress-theme-bundle#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/wordpress-elementor-themes#top: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/bundle: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/50618255540384:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVzE4NTNQTUYzVzJEMVEzREhE": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/media-carousel-widget/: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/wordpress-theme-bundle#tab-1%20: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/restaurant-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51475250708640:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWVldUWURDNUY3SjMwUUdLU1g2": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/dynamic-content-for-elementor#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cart/51667855048864:1: Get "https://www.wpelemento.com/checkouts/cn/Z2NwLXVzLWNlbnRyYWwxOjAxSkI5WTZWV0Y1MzUyR0pCRk5aWVNGWlRE": read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/restaurant-wordpress-theme.png?v=1719234872: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/shortcodes-in-wordpress: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/freelancer: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/construction-company-wordpress-theme.png?v=1724743866: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/business-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/cdn/shop/files/flowers-wordpress-theme.png?v=1721279711: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/supermarket-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/museum-wordpress-theme#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/collections/wordpress-elementor-themes#MainContent: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/blogs/all/missing-style-css: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 Error processing https://www.wpelemento.com/products/business-wordpress-theme#tab-1%20: read tcp 192.168.1.2:62551->23.227.38.74:443: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2024/10/28 21:39:40 Worker shutting down gracefully
+2024/10/28 21:39:40 
+Scraping completed:
+2024/10/28 21:39:40 Total URLs processed: 111
+2024/10/28 21:39:40 Total errors encountered: 100
+2024/10/28 21:39:40 Total unique links found: 393
+2024/10/28 21:39:40 Total execution time: 31.8994951s
+2024/10/28 21:39:40 Average time per URL: 287.382838ms
+2024/10/28 21:39:40 
+Performance Metrics:
+2024/10/28 21:39:40 ------------------------
+2024/10/28 21:39:40 CPU Metrics:
+2024/10/28 21:39:40   - CPU Utilization: 16.36%
+2024/10/28 21:39:40   - Available CPU Cores: 12
+2024/10/28 21:39:40   - Goroutines Used: 413
+2024/10/28 21:39:40 
+Memory Metrics:
+2024/10/28 21:39:40   - Current Memory Usage: 23.9 MB
+2024/10/28 21:39:40   - Peak Memory Usage: 23.9 MB
+2024/10/28 21:39:40   - System Memory Available: 1.0 GB
+2024/10/28 21:39:40   - Memory Usage %: 0.15%
+2024/10/28 21:39:40 
+Performance Indicators:
+2024/10/28 21:39:40   - Average Processing Speed: 13.32 URLs/second
+2024/10/28 21:39:40   - Success Rate: 100.00%
+2024/10/28 21:39:40   - Average Response Time: 586.668597ms
+2024/10/28 21:39:40 
+Efficiency Metrics:
+2024/10/28 21:39:40   - URLs per Goroutine: 0.27
+2024/10/28 21:39:40   - Memory per URL: 220.5 KB
+2024/10/28 21:39:40   - CPU Efficiency Score: 81.38
