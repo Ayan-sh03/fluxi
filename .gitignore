@@ -1,1 +1,7 @@
 /output
+queue_checkpoint.json
+scraperwithCPU.log
+scrapper.db
+.vscode
+main.go
+.env

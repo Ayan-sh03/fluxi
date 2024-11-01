@@ -5,6 +5,8 @@ import "time"
 type QueueManager interface {
 	Enqueue(url string) error
 	Dequeue() (string, error)
+	Len() (int, error)
+	Clear() error
 }
 
 type QueueItem struct {

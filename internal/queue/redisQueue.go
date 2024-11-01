@@ -14,7 +14,7 @@ type RedisQueue struct {
 	ctx    context.Context
 }
 
-func NewRedisQueue(addr string) (*RedisQueue, error) {
+func NewRedisQueue(addr string, urlString string) (*RedisQueue, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:            addr,
 		MaxRetries:      5,
@@ -33,11 +33,15 @@ func NewRedisQueue(addr string) (*RedisQueue, error) {
 
 	return &RedisQueue{
 		client: client,
-		key:    "scraper:urls",
+		key:    "scraper:urls:" + urlString,
 		ctx:    ctx,
 	}, nil
 }
 
+func (q *RedisQueue) Clear() error {
+	// fmt.Println("Clearng Redis queue :", q.key)
+	return q.client.Del(q.key).Err()
+}
 func (q *RedisQueue) Enqueue(url string) error {
 	item := QueueItem{
 		URL:       url,
@@ -50,8 +54,15 @@ func (q *RedisQueue) Enqueue(url string) error {
 	if err != nil {
 		return err
 	}
+	err = q.client.LPush(q.key, data).Err()
+	if err != nil {
+		return err
+	}
+	// fmt.Println("Enqueued URL:", url)
+	// _, err := q.client.LRange(q.key, 0, -1).Result()
+	// fmt.Println("All URLs in queue:", q.key)
 
-	return q.client.LPush(q.key, data).Err()
+	return err
 }
 
 func (q *RedisQueue) Dequeue() (string, error) {
@@ -69,4 +80,12 @@ func (q *RedisQueue) Dequeue() (string, error) {
 	}
 
 	return item.URL, nil
+}
+
+func (q *RedisQueue) Len() (int, error) {
+	count, err := q.client.LLen(q.key).Result()
+	if err != nil {
+		return 0, err
+	}
+	return int(count), nil
 }

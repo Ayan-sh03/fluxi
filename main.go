@@ -46,7 +46,7 @@ func init() {
 	}
 	logger = log.New(logFile, "", log.LstdFlags)
 	// Also log to stdout
-	log.SetOutput(os.Stdout)
+	// log.SetOutput(os.Stdout)
 }
 
 type Scraper struct {
@@ -56,6 +56,7 @@ type Scraper struct {
 	client      *http.Client
 	concurrency int
 	rootDomain  string
+	rootPath    string
 	urlQueue    chan string
 	wg          sync.WaitGroup
 	shutdown    chan struct{}
@@ -75,7 +76,10 @@ type Scraper struct {
 type QueueManager interface {
 	Enqueue(url string) error
 	Dequeue() (string, error)
+	Len() (int, error)
+	Clear() error
 }
+
 type RedisQueue struct {
 	client *redis.Client
 	key    string
@@ -86,6 +90,11 @@ type QueueItem struct {
 	Timestamp time.Time `json:"timestamp"`
 	Retries   int       `json:"retries"`
 	Priority  int       `json:"priority"`
+}
+
+type ChannelQueue struct {
+	queue chan string
+	mutex sync.Mutex
 }
 
 func NewRedisQueue(addr string) (*RedisQueue, error) {
@@ -145,7 +154,73 @@ func (q *RedisQueue) Dequeue() (string, error) {
 	return item.URL, nil
 }
 
+func (q *RedisQueue) Clear() error {
+	return q.client.Del(q.key).Err()
+}
+
+func (q *RedisQueue) Len() (int, error) {
+	count, err := q.client.LLen(q.key).Result()
+	if err != nil {
+		return 0, err
+	}
+	return int(count), nil
+}
+
+func NewChannelQueue(capacity int) *ChannelQueue {
+	return &ChannelQueue{
+		queue: make(chan string, capacity),
+	}
+}
+
+func (q *ChannelQueue) Enqueue(url string) error {
+	q.mutex.Lock()
+	defer q.mutex.Unlock()
+
+	select {
+	case q.queue <- url:
+		// fmt.Printf("Successfully enqueued URL: %s\n", url)
+		return nil
+	default:
+		return fmt.Errorf("queue is full")
+	}
+}
+
+func (q *ChannelQueue) Dequeue() (string, error) {
+	q.mutex.Lock()
+	defer q.mutex.Unlock()
+
+	select {
+	case url := <-q.queue:
+		// fmt.Printf("Successfully dequeued URL: %s\n", url)
+		return url, nil
+	default:
+		// Instead of returning empty string, return an error when queue is empty
+		return "", fmt.Errorf("queue is empty")
+	}
+}
+
+func (q *ChannelQueue) Len() (int, error) {
+	return len(q.queue), nil
+}
+
+func (q *ChannelQueue) Clear() error {
+	for len(q.queue) > 0 {
+		<-q.queue
+	}
+	return nil
+}
+
 func (s *Scraper) saveQueueCheckpoint() {
+
+	queueLength, err := s.queue.Len()
+	if err != nil {
+		logger.Printf("Error getting queue length: %v", err)
+		return
+	}
+	if queueLength == 0 {
+		return
+	}
+
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 
@@ -154,20 +229,17 @@ func (s *Scraper) saveQueueCheckpoint() {
 		case <-ticker.C:
 			// Create a slice to store current queue contents
 			var queueContents []string
+			// Iterate over the queue and add URLs to the slice
+			//dequeu from the scrapper queue append it to queueContents and put it back
 
-			// Safely get queue length
-			queueLen := len(s.urlQueue)
-
-			// Read from queue without removing items
-			for i := 0; i < queueLen; i++ {
-				select {
-				case url := <-s.urlQueue:
-					queueContents = append(queueContents, url)
-					// Put it back in the queue
-					s.urlQueue <- url
-				default:
+			for i := 0; i < queueLength; i++ {
+				url, err := s.queue.Dequeue()
+				if err != nil {
+					logger.Printf("Error dequeuing URL: %v", err)
 					continue
 				}
+				queueContents = append(queueContents, url)
+				s.queue.Enqueue(url)
 			}
 
 			// Write to checkpoint file
@@ -274,11 +346,29 @@ func (s *Scraper) updatePerformanceMetrics() {
 	}
 }
 
-func NewScraper(concurrency int, rootURL string, maxLinks int) *Scraper {
-
-	q, err := NewRedisQueue("localhost:6379")
+func extractDomain(urlString string) string {
+	u, err := url.Parse(urlString)
 	if err != nil {
-		log.Fatalf("Failed to create Redis queue: %v", err)
+		return ""
+	}
+	return u.Host
+}
+
+func NewScraper(concurrency int, rootURL string, maxLinks int) *Scraper {
+	parsedURL, _ := url.Parse(rootURL)
+
+	// Extract host and path
+	host := parsedURL.Host
+	path := parsedURL.Path
+
+	var q QueueManager
+	var err error
+
+	q, err = NewRedisQueue("localhost:6379")
+	if err != nil {
+		logger.Printf("Redis unavailable, falling back to channel queue: %v", err)
+		q = NewChannelQueue(1000)
+		fmt.Println("Using channel queue")
 	}
 
 	return &Scraper{
@@ -291,7 +381,8 @@ func NewScraper(concurrency int, rootURL string, maxLinks int) *Scraper {
 			},
 		},
 		concurrency: concurrency,
-		rootDomain:  extractDomain(rootURL),
+		rootDomain:  host,
+		rootPath:    path,
 		urlQueue:    make(chan string, 1000),
 		shutdown:    make(chan struct{}),
 		stats: struct {
@@ -306,23 +397,70 @@ func NewScraper(concurrency int, rootURL string, maxLinks int) *Scraper {
 	}
 }
 
-func extractDomain(urlString string) string {
+func (s *Scraper) isValidURL(urlString string) bool {
+	if urlString == "" || strings.Contains(urlString, "#") {
+		return false
+	}
+
 	u, err := url.Parse(urlString)
 	if err != nil {
-		return ""
+		return false
 	}
-	return u.Host
+
+	if u.RawQuery != "" {
+		return false
+	}
+
+	// Check domain match
+	if u.Host != s.rootDomain && u.Host != "" {
+		return false
+	}
+
+	// If rootPath is specified, only allow URLs under that path
+	if s.rootPath != "" && s.rootPath != "/" {
+		return strings.HasPrefix(u.Path, s.rootPath)
+	}
+
+	return true
 }
 
-func (s *Scraper) isValidURL(urlString string) bool {
-	if urlString == "" || strings.HasPrefix(urlString, "#") {
-		return false
+func (s *Scraper) Start(startURL string) {
+	logger.Printf("Starting scraper with root URL: %s", startURL)
+
+	if err := s.restoreFromCheckpoint(); err != nil {
+		logger.Printf("Error restoring from checkpoint: %v", err)
 	}
-	u, err := url.Parse(urlString)
-	if err != nil {
-		return false
+
+	// Start checkpoint saving goroutine
+	//only call if using Channel based queue
+
+	go s.saveQueueCheckpoint()
+
+	// Setup signal handling
+	sigChan := make(chan os.Signal, 1)
+	signal.Notify(sigChan, syscall.SIGINT, syscall.SIGTERM)
+
+	// Start workers
+	for i := 0; i < s.concurrency; i++ {
+		s.wg.Add(1)
+		go s.worker()
 	}
-	return u.Host == s.rootDomain || u.Host == ""
+	go s.trackPerformance() // <-- Add this lin
+	// Start initial URL
+	// s.urlQueue <- startURL
+	s.queue.Enqueue(startURL)
+
+	// Wait for interrupt or completion
+	go func() {
+		<-sigChan
+		logger.Println("Received shutdown signal. Gracefully shutting down...")
+		close(s.shutdown)
+		s.wg.Wait()
+		os.Exit(0)
+	}()
+
+	// Wait for completion
+	s.wg.Wait()
 }
 
 // func (s *Scraper) incrementProcessed() {
@@ -484,6 +622,7 @@ func (s *Scraper) processLinks(doc *goquery.Document, baseURL string) {
 		}
 
 		absoluteURL := s.makeAbsoluteURL(href, baseURL)
+		// fmt.Println(absoluteURL)
 		if s.isValidURL(absoluteURL) {
 			if _, loaded := s.visited.LoadOrStore(absoluteURL, true); !loaded {
 				s.addLink(absoluteURL)
@@ -605,10 +744,15 @@ func (s *Scraper) worker() {
 		select {
 		case <-s.shutdown:
 			logger.Printf("Worker shutting down gracefully")
+			s.queue.Clear()
 			return
 		default:
-			// Dequeue URL from Redis
+			// Dequeue URL from Queue
 			url, err := s.queue.Dequeue()
+			if url == "" {
+				return
+			}
+			// fmt.Println("Dequeued Url ,", url)
 			if err != nil {
 				logger.Printf("Error dequeuing URL: %v", err)
 				continue
@@ -657,7 +801,6 @@ func (s *Scraper) incrementErrors() {
 	s.stats.errors++
 	s.stats.Unlock()
 }
-
 
 func (s *Scraper) writeToFile(urlStr, markdown string) {
 	filename := fmt.Sprintf("output/%s.md", url.QueryEscape(urlStr))
@@ -772,10 +915,10 @@ func handleFullScrape(c *gin.Context) {
 }
 
 func main() {
-	startURL := "https://www.wpelemento.com/"
+	startURL := "https://www.vwthemes.com/products"
 
 	logger.Printf("Initializing scraper...")
-	scraper := NewScraper(200, startURL, 50)
+	scraper := NewScraper(500, startURL, 5)
 
 	scraper.Start(startURL)
 }
