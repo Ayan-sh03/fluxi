@@ -1,0 +1,92 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Web Scraper API",
+    "version": "1.0.0",
+    "description": "API for scraping web pages and converting them to markdown"
+  },
+  "paths": {
+    "/scrape/single": {
+      "post": {
+        "tags": ["scraping"],
+        "summary": "Scrape single URL",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SingleURLRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful scrape",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "string" },
+                "url": { "type": "string" },
+                "output_file": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scrape/full": {
+      "post": {
+        "tags": ["scraping"],
+        "summary": "Full website scrape",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/FullScrapeRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Scrape job started",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": { "type": "string" },
+                "job_id": { "type": "string" },
+                "root_url": { "type": "string" },
+                "max_urls": { "type": "integer" },
+                "concurrency": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/job/status": {
+      "get": {
+        "tags": ["jobs"],
+        "summary": "Get job status",
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "query",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job status retrieved",
+            "schema": {
+              "$ref": "#/definitions/ScrappedUrl"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "Documentation for Scraper API",
+    "title": "Documentation for Scraper API",
+    "version": "1.0.0"
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "paths": {},
+  "definitions": {
+    "FullScrapeRequest": {
+      "type": "object",
+      "required": [
+        "rootUrl"
+      ],
+      "properties": {
+        "concurrency": {
+          "description": "Number of concurrent scraping operations",
+          "type": "integer",
+          "format": "int64",
+          "default": 100,
+          "x-go-name": "Concurrency"
+        },
+        "maxUrls": {
+          "description": "Maximum number of URLs to scrape",
+          "type": "integer",
+          "format": "int64",
+          "default": 100,
+          "x-go-name": "MaxURLs"
+        },
+        "rootUrl": {
+          "description": "Root URL to start scraping from",
+          "type": "string",
+          "x-go-name": "RootURL"
+        }
+      },
+      "x-go-name": "fullScrapeRequest",
+      "x-go-package": "scrapper/docs"
+    },
+    "SingleURLRequest": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "description": "URL to scrape",
+          "type": "string",
+          "x-go-name": "URL"
+        }
+      },
+      "x-go-name": "singleURLRequest",
+      "x-go-package": "scrapper/docs"
+    }
+  }
+}
