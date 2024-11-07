@@ -60,26 +60,9 @@ func (s *Scraper) makeAbsoluteURL(href, baseURL string) string {
 	return absoluteURL.String()
 }
 
-func (s *Scraper) incrementProcessed() {
-	s.stats.Lock()
-	defer s.stats.Unlock()
-
-	s.stats.processed++
-	if s.stats.processed >= s.stats.maxLinks {
-		logger.Logger.Printf("Reached maximum link count of %d, initiating shutdown...", s.stats.maxLinks)
-		select {
-		case <-s.shutdown: // Check if shutdown is already initiated
-		default:
-			close(s.shutdown)
-		}
-	}
-}
 func (s *Scraper) incrementErrors() {
-	s.stats.Lock()
-	s.stats.errors++
-	s.stats.Unlock()
+	s.stats.errors.Add(1)
 }
-
 func (s *Scraper) WriteToFile(urlStr, markdown string) {
 	filename := fmt.Sprintf("output/%s.md", url.QueryEscape(urlStr))
 	os.MkdirAll("output", 0755)

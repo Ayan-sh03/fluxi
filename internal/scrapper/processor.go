@@ -12,6 +12,13 @@ import (
 )
 
 func (s *Scraper) HtmlToMarkdown(url string) (string, error) {
+
+	//check if maxLinks reached
+	if s.stats.processed.Load() >= int64(s.stats.maxLinks) {
+		s.cancel()
+		return "", fmt.Errorf("max links reached")
+	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	startTime := time.Now()
 	defer func() {

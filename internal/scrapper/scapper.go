@@ -1,6 +1,7 @@
 package scrapper
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -17,6 +18,8 @@ import (
 )
 
 type Scraper struct {
+	ctx            context.Context
+	cancel         context.CancelFunc
 	jobId          string
 	visited        sync.Map
 	links          []string
@@ -25,16 +28,14 @@ type Scraper struct {
 	concurrency    int
 	rootDomain     string
 	rootPath       string
-	urlQueue       chan string
 	wg             sync.WaitGroup
 	shutdown       chan struct{}
 	isShuttingDown atomic.Bool
 	stats          struct {
-		processed  int
-		errors     int
+		processed  atomic.Int64
+		errors     atomic.Int64
 		maxLinks   int
 		noMoreURLs bool // New field to track if we've exhausted all URLs
-		sync.Mutex
 	}
 	startTime     time.Time
 	responseTimes []time.Duration
@@ -47,7 +48,7 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 	var q queue.QueueManager
 	var err error
 	parsedURL, _ := url.Parse(rootURL)
-
+	ctx, cancel := context.WithCancel(context.Background())
 	// Extract host and path
 	host := parsedURL.Host
 	path := parsedURL.Path
@@ -63,6 +64,8 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 	}
 
 	return &Scraper{
+		ctx:    ctx,
+		cancel: cancel,
 		client: &http.Client{
 			Timeout: 30 * time.Second,
 			Transport: &http.Transport{
@@ -71,19 +74,18 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 				IdleConnTimeout:     90 * time.Second,
 			},
 		},
-		concurrency:    concurrency,
-		jobId:          jobId,
-		rootDomain:     host,
-		rootPath:       path,
-		urlQueue:       make(chan string, 1000),
+		concurrency: concurrency,
+		jobId:       jobId,
+		rootDomain:  host,
+		rootPath:    path,
+
 		shutdown:       make(chan struct{}),
 		isShuttingDown: atomic.Bool{},
 		stats: struct {
-			processed  int
-			errors     int
+			processed  atomic.Int64
+			errors     atomic.Int64
 			maxLinks   int
 			noMoreURLs bool
-			sync.Mutex
 		}{maxLinks: maxLinks},
 		startTime: time.Now(),
 		queue:     q,
@@ -109,9 +111,9 @@ func (s *Scraper) restoreFromCheckpoint() error {
 	}
 
 	// Restore URLs to queue
-	for _, url := range urls {
-		s.urlQueue <- url
-	}
+	// for _, url := range urls {
+	// 	s.urlQueue <- url
+	// }
 
 	logger.Logger.Printf("Restored %d URLs from checkpoint", len(urls))
 	return nil
@@ -170,47 +172,45 @@ func (s *Scraper) saveQueueCheckpoint() {
 	}
 }
 
+func (s *Scraper) tryIncrementProcessed() bool {
+	newCount := s.stats.processed.Add(1)
+	if newCount >= int64(s.stats.maxLinks) {
+		s.cancel() // Cancel the context when maxLinks is reached
+		return false
+	}
+	return true
+}
+
 func (s *Scraper) worker() {
 	defer s.wg.Done()
 
-	emptyQueueCount := 0
-	maxEmptyChecks := 50 // Allow 5 empty checks before shutdown
-
 	for {
 		select {
+		case <-s.ctx.Done():
+			logger.Logger.Printf("Context canceled, worker exiting.")
+			return
 		case <-s.shutdown:
 			logger.Logger.Printf("Worker shutting down gracefully")
 			s.updateJobStatus()
 			s.queue.Clear()
 			return
 		default:
+			// Proceed with processing URLs
 			url, err := s.queue.Dequeue()
 			if err != nil {
 				logger.Logger.Printf("Error dequeuing URL: %v", err)
+				time.Sleep(100 * time.Millisecond)
 				continue
 			}
 
 			if url == "" {
-				emptyQueueCount++
-				if emptyQueueCount > maxEmptyChecks {
-					queueLen, _ := s.queue.Len()
-					if queueLen == 0 {
-						logger.Logger.Printf("Queue consistently empty, initiating shutdown")
-						// Only initiate shutdown if we haven't already
-						if !s.isShuttingDown.Swap(true) {
-							close(s.shutdown)
-						}
-						return
-					}
-				}
 				time.Sleep(100 * time.Millisecond)
 				continue
 			}
-			// Reset counter when we get a URL
-			emptyQueueCount = 0
 
-			if s.stats.processed >= s.stats.maxLinks {
-				return
+			if !s.tryIncrementProcessed() {
+				logger.Logger.Printf("Max links reached (%d). Context canceled.", s.stats.maxLinks)
+				continue
 			}
 
 			logger.Logger.Printf("Processing URL: %s", url)
@@ -221,7 +221,6 @@ func (s *Scraper) worker() {
 				continue
 			}
 			s.WriteToFile(url, markdown)
-			s.incrementProcessed()
 			logger.Logger.Printf("Successfully processed URL: %s", url)
 			err = s.updateScrappedUrls()
 			if err != nil {
@@ -230,16 +229,15 @@ func (s *Scraper) worker() {
 		}
 	}
 }
-
 func (s *Scraper) Start(startURL string) {
 	logger.Logger.Printf("Starting scraper with root URL: %s", startURL)
 
-	if err := s.restoreFromCheckpoint(); err != nil {
-		logger.Logger.Printf("Error restoring from checkpoint: %v", err)
-	}
+	// if err := s.restoreFromCheckpoint(); err != nil {
+	// 	logger.Logger.Printf("Error restoring from checkpoint: %v", err)
+	// }
 
-	// Start checkpoint saving goroutine
-	go s.saveQueueCheckpoint()
+	// // Start checkpoint saving goroutine
+	// go s.saveQueueCheckpoint()
 
 	// Setup signal handling
 	sigChan := make(chan os.Signal, 1)
@@ -323,7 +321,11 @@ func (s *Scraper) updateJobStatus() error {
 func (s *Scraper) updateScrappedUrls() error {
 	//update the scrapped urls in the database
 	// fmt.Println("updating scrapped urls")
-	scrappedUrls := s.links
+
+	s.linksMutex.Lock()
+	scrappedUrls := make([]string, len(s.links))
+	copy(scrappedUrls, s.links)
+	s.linksMutex.Unlock()
 
 	//marshal the scrapped urls to json
 	scrappedUrlsJSON, err := json.Marshal(scrappedUrls)

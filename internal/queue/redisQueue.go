@@ -3,6 +3,7 @@ package queue
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/go-redis/redis"
@@ -30,7 +31,7 @@ func NewRedisQueue(addr string, urlString string) (*RedisQueue, error) {
 	if err := client.Ping().Err(); err != nil {
 		return nil, err
 	}
-
+	fmt.Println("Initialised Redis Queue for key ", "scraper:urls:"+urlString)
 	return &RedisQueue{
 		client: client,
 		key:    "scraper:urls:" + urlString,
