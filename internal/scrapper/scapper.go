@@ -10,6 +10,7 @@ import (
 	"os/signal"
 	"scrapper/internal/db"
 	"scrapper/internal/queue"
+	"scrapper/internal/writer"
 	"scrapper/pkg/logger"
 	"sync"
 	"sync/atomic"
@@ -35,12 +36,13 @@ type Scraper struct {
 		processed  atomic.Int64
 		errors     atomic.Int64
 		maxLinks   int
-		noMoreURLs bool // New field to track if we've exhausted all URLs
+		noMoreURLs bool
 	}
-	startTime     time.Time
-	responseTimes []time.Duration
-	queue         queue.QueueManager
-	store         db.DB
+	startTime time.Time
+	queue     queue.QueueManager
+	store     db.DB
+	writer    writer.Writer
+
 }
 
 func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Scraper {
@@ -53,8 +55,10 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 	host := parsedURL.Host
 	path := parsedURL.Path
 
+	// !TODO: config should contain the writer and queue type, defaulting to file
+
 	// Try Redis first
-	q, err = queue.NewRedisQueue("localhost:6379", rootURL)
+	q, err = queue.NewRedisQueue("localhost:6379", rootURL, maxLinks)
 	if err != nil {
 		fmt.Printf("Redis unavailable, falling back to channel queue: %v", err)
 		q = queue.NewChannelQueue(1000)
@@ -67,7 +71,7 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 		ctx:    ctx,
 		cancel: cancel,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 120 * time.Second,
 			Transport: &http.Transport{
 				MaxIdleConns:        100,
 				MaxIdleConnsPerHost: 100,
@@ -89,6 +93,7 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 		}{maxLinks: maxLinks},
 		startTime: time.Now(),
 		queue:     q,
+		writer:    writer.NewFileWriter("output"),
 	}
 
 }
@@ -173,12 +178,20 @@ func (s *Scraper) saveQueueCheckpoint() {
 }
 
 func (s *Scraper) tryIncrementProcessed() bool {
-	newCount := s.stats.processed.Add(1)
-	if newCount >= int64(s.stats.maxLinks) {
-		s.cancel() // Cancel the context when maxLinks is reached
-		return false
+	for {
+		current := s.stats.processed.Load()
+		if current >= int64(s.stats.maxLinks) {
+			return false
+		}
+		if s.stats.processed.CompareAndSwap(current, current+1) {
+			if current+1 >= int64(s.stats.maxLinks) {
+				logger.Logger.Printf("Max links reached: %d", s.stats.maxLinks)
+				s.queue.Clear()
+				s.cancel() // Cancel the context when maxLinks is reached
+			}
+			return true
+		}
 	}
-	return true
 }
 
 func (s *Scraper) worker() {
@@ -187,9 +200,16 @@ func (s *Scraper) worker() {
 	for {
 		select {
 		case <-s.ctx.Done():
+			logger.Logger.Printf("Finished job in %v seconds", time.Since(s.startTime).Seconds())
+
 			logger.Logger.Printf("Context canceled, worker exiting.")
+			s.updateJobStatus()
+			s.queue.Clear()
+
 			return
 		case <-s.shutdown:
+			logger.Logger.Printf("Finished job in %v seconds", time.Since(s.startTime).Seconds())
+
 			logger.Logger.Printf("Worker shutting down gracefully")
 			s.updateJobStatus()
 			s.queue.Clear()
@@ -197,6 +217,7 @@ func (s *Scraper) worker() {
 		default:
 			// Proceed with processing URLs
 			url, err := s.queue.Dequeue()
+
 			if err != nil {
 				logger.Logger.Printf("Error dequeuing URL: %v", err)
 				time.Sleep(100 * time.Millisecond)
@@ -214,13 +235,13 @@ func (s *Scraper) worker() {
 			}
 
 			logger.Logger.Printf("Processing URL: %s", url)
-			markdown, err := s.HtmlToMarkdown(url)
+			markdown, err := s.HtmlToText(url)
 			if err != nil {
 				logger.Logger.Printf("Error processing %s: %v", url, err)
 				s.incrementErrors()
 				continue
 			}
-			s.WriteToFile(url, markdown)
+			s.writer.Write(url, markdown)
 			logger.Logger.Printf("Successfully processed URL: %s", url)
 			err = s.updateScrappedUrls()
 			if err != nil {
@@ -231,6 +252,7 @@ func (s *Scraper) worker() {
 }
 func (s *Scraper) Start(startURL string) {
 	logger.Logger.Printf("Starting scraper with root URL: %s", startURL)
+	s.startTime = time.Now()
 
 	// if err := s.restoreFromCheckpoint(); err != nil {
 	// 	logger.Logger.Printf("Error restoring from checkpoint: %v", err)
