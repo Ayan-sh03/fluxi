@@ -4,18 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"sync/atomic"
 	"time"
 
 	"github.com/go-redis/redis"
 )
 
 type RedisQueue struct {
-	client *redis.Client
-	key    string
-	ctx    context.Context
+	client   *redis.Client
+	key      string
+	maxLen   int
+	ctx      context.Context
+	isClosed atomic.Bool
 }
 
-func NewRedisQueue(addr string, urlString string) (*RedisQueue, error) {
+func NewRedisQueue(addr string, urlString string, maxLen int) (*RedisQueue, error) {
 	client := redis.NewClient(&redis.Options{
 		Addr:            addr,
 		MaxRetries:      5,
@@ -35,6 +38,7 @@ func NewRedisQueue(addr string, urlString string) (*RedisQueue, error) {
 	return &RedisQueue{
 		client: client,
 		key:    "scraper:urls:" + urlString,
+		maxLen: maxLen,
 		ctx:    ctx,
 	}, nil
 }
@@ -44,6 +48,21 @@ func (q *RedisQueue) Clear() error {
 	return q.client.Del(q.key).Err()
 }
 func (q *RedisQueue) Enqueue(url string) error {
+	if q.isClosed.Load() {
+		return fmt.Errorf("queue is closed: maximum limit reached")
+	}
+	currentLen, err := q.Len()
+	if err != nil {
+		return err
+	}
+
+	// Hard stop at maxUrls
+	if currentLen >= q.maxLen {
+		q.isClosed.Store(true) // Close queue permanently
+
+		return fmt.Errorf("queue at capacity: %d urls", q.maxLen)
+	}
+
 	item := QueueItem{
 		URL:       url,
 		Timestamp: time.Now(),

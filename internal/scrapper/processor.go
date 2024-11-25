@@ -6,12 +6,11 @@ import (
 	"scrapper/pkg/logger"
 	"strings"
 	"sync"
-	"time"
 
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (s *Scraper) HtmlToMarkdown(url string) (string, error) {
+func (s *Scraper) HtmlToText(url string) (string, error) {
 
 	//check if maxLinks reached
 	if s.stats.processed.Load() >= int64(s.stats.maxLinks) {
@@ -20,10 +19,6 @@ func (s *Scraper) HtmlToMarkdown(url string) (string, error) {
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
-	startTime := time.Now()
-	defer func() {
-		s.responseTimes = append(s.responseTimes, time.Since(startTime))
-	}()
 
 	if err != nil {
 		return "", fmt.Errorf("error creating request: %v", err)
@@ -45,7 +40,7 @@ func (s *Scraper) HtmlToMarkdown(url string) (string, error) {
 		return "", err
 	}
 
-	var markdown strings.Builder
+	var text strings.Builder
 	var wg sync.WaitGroup
 
 	// Process different HTML elements concurrently
@@ -54,57 +49,57 @@ func (s *Scraper) HtmlToMarkdown(url string) (string, error) {
 	// Process headings
 	go func() {
 		defer wg.Done()
-		s.processHeadings(doc, &markdown)
+		s.processHeadingsText(doc, &text)
 	}()
 
 	// Process paragraphs and text
 	go func() {
 		defer wg.Done()
-		s.processText(doc, &markdown)
+		s.processTextText(doc, &text)
 	}()
 
 	// Process links
 	go func() {
 		defer wg.Done()
-		s.processLinks(doc, url)
+		s.processLinksText(doc, url)
 	}()
 
 	// Process other elements
 	go func() {
 		defer wg.Done()
-		s.processOtherElements(doc, &markdown)
+		s.processOtherElementsText(doc, &text)
 	}()
 
 	wg.Wait()
 
-	return strings.TrimSpace(markdown.String()), nil
+	return strings.TrimSpace(text.String()), nil
 }
-func (s *Scraper) processHeadings(doc *goquery.Document, markdown *strings.Builder) {
+
+func (s *Scraper) processHeadingsText(doc *goquery.Document, text *strings.Builder) {
 	var mu sync.Mutex
 	doc.Find("h1, h2, h3, h4, h5, h6").Each(func(i int, sel *goquery.Selection) {
-		tag := goquery.NodeName(sel)
 		headingText := strings.TrimSpace(sel.Text())
 		if headingText != "" {
 			mu.Lock()
-			markdown.WriteString(strings.Repeat("#", int(tag[1]-'0')) + " " + headingText + "\n\n")
+			text.WriteString(headingText + "\n\n")
 			mu.Unlock()
 		}
 	})
 }
 
-func (s *Scraper) processText(doc *goquery.Document, markdown *strings.Builder) {
+func (s *Scraper) processTextText(doc *goquery.Document, text *strings.Builder) {
 	var mu sync.Mutex
 	doc.Find("p").Each(func(i int, sel *goquery.Selection) {
-		text := strings.TrimSpace(sel.Text())
-		if text != "" {
+		t := strings.TrimSpace(sel.Text())
+		if t != "" {
 			mu.Lock()
-			markdown.WriteString(text + "\n\n")
+			text.WriteString(t + "\n\n")
 			mu.Unlock()
 		}
 	})
 }
 
-func (s *Scraper) processLinks(doc *goquery.Document, baseURL string) {
+func (s *Scraper) processLinksText(doc *goquery.Document, baseURL string) {
 	doc.Find("a").Each(func(i int, sel *goquery.Selection) {
 		href, exists := sel.Attr("href")
 		if !exists {
@@ -114,6 +109,10 @@ func (s *Scraper) processLinks(doc *goquery.Document, baseURL string) {
 		absoluteURL := s.makeAbsoluteURL(href, baseURL)
 		if s.isValidURL(absoluteURL) {
 			if _, loaded := s.visited.LoadOrStore(absoluteURL, true); !loaded {
+				if s.stats.processed.Load() >= int64(s.stats.maxLinks) {
+					// Do not enqueue new URLs if maxLinks is reached
+					return
+				}
 				s.addLink(absoluteURL)
 				// Replace channel send with Redis enqueue
 				err := s.queue.Enqueue(absoluteURL)
@@ -125,15 +124,15 @@ func (s *Scraper) processLinks(doc *goquery.Document, baseURL string) {
 	})
 }
 
-func (s *Scraper) processOtherElements(doc *goquery.Document, markdown *strings.Builder) {
+func (s *Scraper) processOtherElementsText(doc *goquery.Document, text *strings.Builder) {
 	var mu sync.Mutex
 
 	// Process blockquotes
 	doc.Find("blockquote").Each(func(i int, sel *goquery.Selection) {
-		text := strings.TrimSpace(sel.Text())
-		if text != "" {
+		t := strings.TrimSpace(sel.Text())
+		if t != "" {
 			mu.Lock()
-			markdown.WriteString("> " + text + "\n\n")
+			text.WriteString(t + "\n\n")
 			mu.Unlock()
 		}
 	})
@@ -143,7 +142,7 @@ func (s *Scraper) processOtherElements(doc *goquery.Document, markdown *strings.
 		code := strings.TrimSpace(sel.Text())
 		if code != "" {
 			mu.Lock()
-			markdown.WriteString("\n" + code + "\n\n\n")
+			text.WriteString(code + "\n\n")
 			mu.Unlock()
 		}
 	})
@@ -151,26 +150,14 @@ func (s *Scraper) processOtherElements(doc *goquery.Document, markdown *strings.
 	// Process tables
 	doc.Find("table").Each(func(i int, sel *goquery.Selection) {
 		mu.Lock()
-		// Table header
-		sel.Find("th").Each(func(j int, th *goquery.Selection) {
-			markdown.WriteString("| " + th.Text() + " ")
-		})
-		markdown.WriteString("|\n")
-
-		// Table separator
-		sel.Find("th").Each(func(j int, th *goquery.Selection) {
-			markdown.WriteString("| --- ")
-		})
-		markdown.WriteString("|\n")
-
 		// Table rows
 		sel.Find("tr").Each(func(j int, tr *goquery.Selection) {
-			tr.Find("td").Each(func(k int, td *goquery.Selection) {
-				markdown.WriteString("| " + td.Text() + " ")
+			tr.Find("th, td").Each(func(k int, td *goquery.Selection) {
+				text.WriteString(td.Text() + "\t")
 			})
-			markdown.WriteString("|\n")
+			text.WriteString("\n")
 		})
-		markdown.WriteString("\n")
+		text.WriteString("\n")
 		mu.Unlock()
 	})
 
@@ -180,7 +167,7 @@ func (s *Scraper) processOtherElements(doc *goquery.Document, markdown *strings.
 		src, exists := sel.Attr("src")
 		if exists {
 			mu.Lock()
-			markdown.WriteString(fmt.Sprintf("![%s](%s)\n\n", alt, src))
+			text.WriteString(fmt.Sprintf("Image: %s (Source: %s)\n\n", alt, src))
 			mu.Unlock()
 		}
 	})
@@ -191,7 +178,7 @@ func (s *Scraper) processOtherElements(doc *goquery.Document, markdown *strings.
 		sel.Find("dt").Each(func(j int, dt *goquery.Selection) {
 			term := strings.TrimSpace(dt.Text())
 			def := strings.TrimSpace(dt.Next().Text())
-			markdown.WriteString(fmt.Sprintf("**%s**\n: %s\n\n", term, def))
+			text.WriteString(fmt.Sprintf("%s: %s\n\n", term, def))
 		})
 		mu.Unlock()
 	})

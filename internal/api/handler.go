@@ -47,7 +47,7 @@ func handleSingleURLScrape(c *gin.Context) {
 
 	scraper := scrapper.NewScraper(1, req.URL, 1, scrappedUrl.JobId)
 	start := time.Now()
-	markdown, err := scraper.HtmlToMarkdown(req.URL)
+	markdown, err := scraper.HtmlToText(req.URL)
 
 	log.Printf("Time taken for HTML to Markdown conversion: %v", time.Since(start))
 	if err != nil {
