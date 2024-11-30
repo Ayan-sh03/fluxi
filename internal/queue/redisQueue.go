@@ -2,7 +2,6 @@ package queue
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"sync/atomic"
 	"time"
@@ -47,42 +46,28 @@ func (q *RedisQueue) Clear() error {
 	// fmt.Println("Clearng Redis queue :", q.key)
 	return q.client.Del(q.key).Err()
 }
-func (q *RedisQueue) Enqueue(url string) error {
+func (q *RedisQueue) Enqueue(urlDataJSON string) error {
 	if q.isClosed.Load() {
 		return fmt.Errorf("queue is closed: maximum limit reached")
 	}
+
 	currentLen, err := q.Len()
 	if err != nil {
 		return err
 	}
 
-	// Hard stop at maxUrls
 	if currentLen >= q.maxLen {
-		q.isClosed.Store(true) // Close queue permanently
-
+		q.isClosed.Store(true)
 		return fmt.Errorf("queue at capacity: %d urls", q.maxLen)
 	}
 
-	item := QueueItem{
-		URL:       url,
-		Timestamp: time.Now(),
-		Retries:   0,
-		Priority:  1,
-	}
-
-	data, err := json.Marshal(item)
+	// Store the JSON string directly
+	err = q.client.LPush(q.key, urlDataJSON).Err()
 	if err != nil {
 		return err
 	}
-	err = q.client.LPush(q.key, data).Err()
-	if err != nil {
-		return err
-	}
-	// fmt.Println("Enqueued URL:", url)
-	// _, err := q.client.LRange(q.key, 0, -1).Result()
-	// fmt.Println("All URLs in queue:", q.key)
 
-	return err
+	return nil
 }
 
 func (q *RedisQueue) Dequeue() (string, error) {
@@ -94,12 +79,8 @@ func (q *RedisQueue) Dequeue() (string, error) {
 		return "", err
 	}
 
-	var item QueueItem
-	if err := json.Unmarshal([]byte(result), &item); err != nil {
-		return "", err
-	}
-
-	return item.URL, nil
+	// Return the JSON string directly
+	return result, nil
 }
 
 func (q *RedisQueue) Len() (int, error) {

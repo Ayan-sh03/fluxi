@@ -18,6 +18,6 @@ func Run() {
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	log.Println("Server started on port 8080")
-	router.Run(":8080")
+	router.Run(":8000")
 
 }

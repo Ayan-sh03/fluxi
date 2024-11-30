@@ -10,6 +10,12 @@ import (
 	"scrapper/pkg/logger"
 )
 
+type Body struct {
+	URL   string `json:"url"`
+	Data  string `json:"data"`
+	Error error  `json:"error"`
+}
+
 func (w *WriterImpl) Write(url, data string) error {
 	//get webhook url from env
 	webhookUrl := os.Getenv("WEBHOOK_URL")

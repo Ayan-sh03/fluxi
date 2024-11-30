@@ -10,69 +10,126 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-func (s *Scraper) HtmlToText(url string) (string, error) {
+// func (s *Scraper) HtmlToText(url string) (string, error) {
 
-	//check if maxLinks reached
+// 	//check if maxLinks reached
+// 	if s.stats.processed.Load() >= int64(s.stats.maxLinks) {
+// 		s.cancel()
+// 		return "", fmt.Errorf("max links reached")
+// 	}
+
+// 	req, err := http.NewRequest("GET", url, nil)
+
+// 	if err != nil {
+// 		return "", fmt.Errorf("error creating request: %v", err)
+// 	}
+// 	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; MyScraper/1.0)")
+
+// 	res, err := s.doRequestWithBackoff(req)
+// 	if err != nil {
+// 		return "", err
+// 	}
+// 	defer res.Body.Close()
+
+// 	if res.StatusCode != 200 {
+// 		return "", fmt.Errorf("failed to fetch URL: %s (status: %d)", url, res.StatusCode)
+// 	}
+
+// 	doc, err := goquery.NewDocumentFromReader(res.Body)
+// 	if err != nil {
+// 		return "", err
+// 	}
+
+// 	var text strings.Builder
+// 	var wg sync.WaitGroup
+
+// 	// Process different HTML elements concurrently
+// 	wg.Add(4)
+
+// 	// Process headings
+// 	go func() {
+// 		defer wg.Done()
+// 		s.processHeadingsText(doc, &text)
+// 	}()
+
+// 	// Process paragraphs and text
+// 	go func() {
+// 		defer wg.Done()
+// 		s.processTextText(doc, &text)
+// 	}()
+
+// 	// Process links
+// 	go func() {
+// 		defer wg.Done()
+// 		s.processLinksText(doc, url)
+// 	}()
+
+// 	// Process other elements
+// 	go func() {
+// 		defer wg.Done()
+// 		s.processOtherElementsText(doc, &text)
+// 	}()
+
+// 	wg.Wait()
+
+//		return strings.TrimSpace(text.String()), nil
+//	}
+func (s *Scraper) HtmlToText(url string) (string, []string, error) {
+	var validURLs []string
+	var urlsMutex sync.Mutex
+
 	if s.stats.processed.Load() >= int64(s.stats.maxLinks) {
 		s.cancel()
-		return "", fmt.Errorf("max links reached")
+		return "", nil, fmt.Errorf("max links reached")
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
-
 	if err != nil {
-		return "", fmt.Errorf("error creating request: %v", err)
+		return "", nil, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("User-Agent", "Mozilla/5.0 (compatible; MyScraper/1.0)")
 
 	res, err := s.doRequestWithBackoff(req)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 	defer res.Body.Close()
 
 	if res.StatusCode != 200 {
-		return "", fmt.Errorf("failed to fetch URL: %s (status: %d)", url, res.StatusCode)
+		return "", nil, fmt.Errorf("failed to fetch URL: %s (status: %d)", url, res.StatusCode)
 	}
 
 	doc, err := goquery.NewDocumentFromReader(res.Body)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 
-	var text strings.Builder
-	var wg sync.WaitGroup
+	// Remove unwanted elements
+	doc.Find("script, style, meta, link").Remove()
 
-	// Process different HTML elements concurrently
-	wg.Add(4)
+	// Extract links
+	doc.Find("a").Each(func(i int, sel *goquery.Selection) {
+		href, exists := sel.Attr("href")
+		if !exists {
+			return
+		}
 
-	// Process headings
-	go func() {
-		defer wg.Done()
-		s.processHeadingsText(doc, &text)
-	}()
+		absoluteURL := s.makeAbsoluteURL(href, url)
+		if s.isValidURL(absoluteURL) {
+			if _, loaded := s.visited.LoadOrStore(absoluteURL, true); !loaded {
+				urlsMutex.Lock()
+				validURLs = append(validURLs, absoluteURL)
+				urlsMutex.Unlock()
+			}
+		}
+	})
 
-	// Process paragraphs and text
-	go func() {
-		defer wg.Done()
-		s.processTextText(doc, &text)
-	}()
+	// Get clean text from body
+	bodyText := strings.TrimSpace(doc.Find("body").Text())
+	// Normalize whitespace
+	bodyText = strings.Join(strings.Fields(bodyText), " ")
 
-	// Process links
-	go func() {
-		defer wg.Done()
-		s.processLinksText(doc, url)
-	}()
-
-	// Process other elements
-	go func() {
-		defer wg.Done()
-		s.processOtherElementsText(doc, &text)
-	}()
-
-	wg.Wait()
-
-	return strings.TrimSpace(text.String()), nil
+	return bodyText, validURLs, nil
 }
 
 func (s *Scraper) processHeadingsText(doc *goquery.Document, text *strings.Builder) {

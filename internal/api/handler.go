@@ -45,9 +45,9 @@ func handleSingleURLScrape(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	scraper := scrapper.NewScraper(1, req.URL, 1, scrappedUrl.JobId)
+	scraper := scrapper.NewScraper(1, req.URL, 1, scrappedUrl.JobId, 0)
 	start := time.Now()
-	markdown, err := scraper.HtmlToText(req.URL)
+	markdown, _, err := scraper.HtmlToText(req.URL)
 
 	log.Printf("Time taken for HTML to Markdown conversion: %v", time.Since(start))
 	if err != nil {
@@ -76,6 +76,7 @@ func handleFullScrape(c *gin.Context) {
 		RootURL     string `json:"rootUrl" binding:"required"`
 		MaxURLs     int    `json:"maxUrls"`
 		Concurrency int    `json:"concurrency"`
+		MaxDepth    int    `json:"maxDepth"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -90,6 +91,10 @@ func handleFullScrape(c *gin.Context) {
 		req.Concurrency = 100
 	}
 
+	if req.MaxDepth == 0 {
+		req.MaxDepth = 3
+	}
+
 	jobId := uuid.New().String()
 	scrappedUrl := models.ScrappedUrl{
 		JobId:        jobId,
@@ -101,7 +106,7 @@ func handleFullScrape(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	scraper := scrapper.NewScraper(req.Concurrency, req.RootURL, req.MaxURLs, jobId)
+	scraper := scrapper.NewScraper(req.Concurrency, req.RootURL, req.MaxURLs, jobId, req.MaxDepth)
 
 	go func() {
 		scraper.Start(req.RootURL)

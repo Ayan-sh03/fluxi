@@ -42,10 +42,15 @@ type Scraper struct {
 	queue     queue.QueueManager
 	store     db.DB
 	writer    writer.Writer
-
+	maxDepth  int
 }
 
-func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Scraper {
+type UrlData struct {
+	URL   string
+	Depth int
+}
+
+func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, maxDepth int) *Scraper {
 
 	var q queue.QueueManager
 	var err error
@@ -94,8 +99,37 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 		startTime: time.Now(),
 		queue:     q,
 		writer:    writer.NewFileWriter("output"),
+		maxDepth:  maxDepth,
 	}
 
+}
+
+//temporary functions for enqueu and dequuqu for tesing depth based scrapper using redis
+
+func (s *Scraper) enqueueUrl(url string, depth int) {
+	urlData := UrlData{
+		URL:   url,
+		Depth: depth,
+	}
+
+	urlDataJSON, err := json.Marshal(urlData)
+	if err != nil {
+		logger.Logger.Printf("Error marshaling URL data: %v", err)
+		return
+	}
+	s.queue.Enqueue(string(urlDataJSON))
+}
+
+func (s *Scraper) dequeueUrl() (*UrlData, error) {
+	urlDataJSON, err := s.queue.Dequeue()
+	if err != nil {
+		return nil, err
+	}
+	var urlData UrlData
+	if err := json.Unmarshal([]byte(urlDataJSON), &urlData); err != nil {
+		return nil, err
+	}
+	return &urlData, nil
 }
 
 func (s *Scraper) restoreFromCheckpoint() error {
@@ -216,7 +250,7 @@ func (s *Scraper) worker() {
 			return
 		default:
 			// Proceed with processing URLs
-			url, err := s.queue.Dequeue()
+			urlDataJSON, err := s.queue.Dequeue()
 
 			if err != nil {
 				logger.Logger.Printf("Error dequeuing URL: %v", err)
@@ -224,8 +258,21 @@ func (s *Scraper) worker() {
 				continue
 			}
 
-			if url == "" {
+			if urlDataJSON == "" {
 				time.Sleep(100 * time.Millisecond)
+				continue
+			}
+			var urlData UrlData
+			if err := json.Unmarshal([]byte(urlDataJSON), &urlData); err != nil {
+				logger.Logger.Printf("Error unmarshaling URL data: %v", err)
+				continue
+			}
+
+			if urlData.Depth >= s.maxDepth {
+				logger.Logger.Printf("Max depth reached (%d). Context canceled.", s.maxDepth)
+				if s.shouldComplete() {
+					s.cancel()
+				}
 				continue
 			}
 
@@ -234,21 +281,53 @@ func (s *Scraper) worker() {
 				continue
 			}
 
-			logger.Logger.Printf("Processing URL: %s", url)
-			markdown, err := s.HtmlToText(url)
+			logger.Logger.Printf("Processing URL: %s at depth: %d", urlData.URL, urlData.Depth)
+			markdown, links, err := s.HtmlToText(urlData.URL)
 			if err != nil {
-				logger.Logger.Printf("Error processing %s: %v", url, err)
+				logger.Logger.Printf("Error processing %s: %v", urlData.URL, err)
 				s.incrementErrors()
 				continue
 			}
-			s.writer.Write(url, markdown)
-			logger.Logger.Printf("Successfully processed URL: %s", url)
+			// fmt.Println("Found links:  ", links)
+
+			for _, link := range links {
+				logger.Logger.Printf("Processing link: %s", link)
+				// Only mark as visited after successful processing
+				newUrlData := UrlData{
+					URL:   link,
+					Depth: urlData.Depth + 1,
+				}
+				jsonData, err := json.Marshal(newUrlData)
+				if err != nil {
+					logger.Logger.Printf("Error marshaling URL data: %v", err)
+					continue
+				}
+
+				logger.Logger.Printf("Enqueuing URL: %s at depth %d", link, urlData.Depth+1)
+				if err := s.queue.Enqueue(string(jsonData)); err != nil {
+					logger.Logger.Printf("Error enqueueing URL: %v", err)
+				}
+				s.addLink(link)
+				s.visited.Store(link, true)
+			}
+
+			s.writer.Write(urlData.URL, markdown)
+			logger.Logger.Printf("Successfully processed URL: %s at depth: %d", urlData.URL, urlData.Depth)
 			err = s.updateScrappedUrls()
 			if err != nil {
 				logger.Logger.Printf("Error updating scrapped urls: %v", err)
 			}
 		}
 	}
+}
+
+func (s *Scraper) shouldComplete() bool {
+	queueLen, err := s.queue.Len()
+	if err != nil {
+		// Handle the error, maybe log it
+		return false
+	}
+	return s.stats.processed.Load() >= int64(s.stats.maxLinks) || queueLen == 0
 }
 func (s *Scraper) Start(startURL string) {
 	logger.Logger.Printf("Starting scraper with root URL: %s", startURL)
@@ -273,7 +352,16 @@ func (s *Scraper) Start(startURL string) {
 	// go s.trackPerformance() // <-- Add this lin
 	// Start initial URL
 	// s.urlQueue <- startURL
-	s.queue.Enqueue(startURL)
+	initialUrlData := UrlData{
+		URL:   startURL,
+		Depth: 0,
+	}
+	jsonData, err := json.Marshal(initialUrlData)
+	if err != nil {
+		logger.Logger.Printf("Error marshaling initial URL data: %v", err)
+		return
+	}
+	s.queue.Enqueue(string(jsonData))
 
 	// Wait for interrupt or completion
 	go func() {
@@ -342,7 +430,7 @@ func (s *Scraper) updateJobStatus() error {
 
 func (s *Scraper) updateScrappedUrls() error {
 	//update the scrapped urls in the database
-	// fmt.Println("updating scrapped urls")
+	fmt.Println("updating scrapped urls")
 
 	s.linksMutex.Lock()
 	scrappedUrls := make([]string, len(s.links))
