@@ -51,10 +51,11 @@ func Run() {
 			fmt.Println("protected.GET::", userID)
 			c.JSON(200, gin.H{"message": "Hello, World!"})
 		})
+		protected.GET("/keys", api.HandleGetApiKeys)
 		protected.POST("/generate-api-key",
 			api.HandleGenerateAPIKey)
 
-		keyProtected := protected.Group("/")
+		keyProtected := router.Group("/auth/")
 		keyProtected.Use(middleware.APIKeyMiddleware())
 		{
 			keyProtected.GET("/key", func(c *gin.Context) {
@@ -64,12 +65,6 @@ func Run() {
 					return
 				}
 				fmt.Println("keyProtected.GET::", apiKey)
-				userID, exists := c.Get("user_id")
-				if !exists {
-					c.JSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized - No user ID provided"})
-					return
-				}
-				fmt.Println("keyProtected.GET::", userID)
 
 				c.JSON(200, gin.H{"message": "Hello, World!"})
 			})

@@ -219,3 +219,22 @@ func HandleGenerateAPIKey(c *gin.Context) {
 	}
 	c.JSON(200, apiKey)
 }
+
+// @Summary Get API keys
+// @Description Retrieves all API keys for the user
+// @Tags API Keys
+// @Accept json
+// @Produce json
+// @Success 200 {array} models.APIKey
+// @Failure 500 {object} ErrorResponse
+// @Router /api-keys [get]
+// @Security ApiKeyAuth
+func HandleGetApiKeys(c *gin.Context) {
+	apiKeys, err := db.Db.GetAPIKeysByUserID(c.GetString("user_id"))
+	if err != nil {
+		log.Println(err)
+		c.JSON(500, gin.H{"error": "Failed to get API keys"})
+		return
+	}
+	c.JSON(200, apiKeys)
+}

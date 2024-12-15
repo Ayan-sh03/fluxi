@@ -169,7 +169,7 @@ func (db *PostgreSQL) GetAPIKeysByUserID(userId string) ([]models.APIKey, error)
 	var apiKeys []models.APIKey
 
 	query := `
-        SELECT id, user_id, api_key, created_at, last_used_at, is_active 
+        SELECT id, user_id, key_value, created_at, last_used_at, is_active 
         FROM api_keys 
         WHERE user_id = $1
     `
@@ -215,9 +215,9 @@ func (db *PostgreSQL) UpdateAPIKeyLastUsedAt(apiKeyID string) error {
 	return err
 }
 
-func (db *PostgreSQL) CheckAPIKeyExists(apiKey string, userId string) (bool, error) {
-	query := `SELECT EXISTS(SELECT 1 FROM api_keys WHERE key_value = $1 AND is_active = true AND user_id = $2)`
+func (db *PostgreSQL) CheckAPIKeyExists(apiKey string) (bool, error) {
+	query := `SELECT EXISTS(SELECT 1 FROM api_keys WHERE key_value = $1 AND is_active = true)`
 	var exists bool
-	err := db.pool.QueryRow(context.Background(), query, apiKey, userId).Scan(&exists)
+	err := db.pool.QueryRow(context.Background(), query, apiKey).Scan(&exists)
 	return exists, err
 }
