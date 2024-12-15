@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxi - API Keys</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #764ba2;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            border: 2px solid #764ba2;
+            border-radius: 8px;
+            color: #764ba2;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #764ba2;
+            color: white;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .api-key-list {
+            margin-bottom: 2rem;
+        }
+
+        .api-key-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .api-key-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .key-info {
+            flex: 1;
+        }
+
+        .key-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .key-value {
+            font-family: monospace;
+            color: #666;
+            background: #fff;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .copy-btn {
+            padding: 8px;
+            background: none;
+            border: none;
+            color: #764ba2;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            color: #667eea;
+        }
+
+        .key-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .delete-btn {
+            padding: 8px;
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .delete-btn:hover {
+            color: #c82333;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(118, 75, 162, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(118, 75, 162, 0.3);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            background: #28a745;
+            color: white;
+            font-weight: 500;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Fluxi</div>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h2 class="section-title">API Keys</h2>
+        
+        <div class="api-key-list" id="apiKeyList">
+            <!-- API keys will be dynamically inserted here -->
+        </div>
+
+        <button class="generate-btn" onclick="generateNewKey()">
+            <i class="fas fa-plus"></i>
+            Generate New API Key
+        </button>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Sample data structure for API keys
+        let apiKeys = [];
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            toast.style.background = type === 'success' ? '#28a745' : '#dc3545';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('API key copied to clipboard!');
+            });
+        }
+
+        function deleteKey(keyId) {
+            if (confirm('Are you sure you want to delete this API key?')) {
+                // Here you'll make an API call to delete the key
+                fetch(`/api/keys/${keyId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        apiKeys = apiKeys.filter(key => key.id !== keyId);
+                        renderApiKeys();
+                        showToast('API key deleted successfully');
+                    }
+                })
+                .catch(error => {
+                    showToast('Failed to delete API key', 'error');
+                });
+            }
+        }
+
+        function generateNewKey() {
+            // Here you'll make an API call to generate a new key
+            fetch('/api/keys/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    apiKeys.push(data.key);
+                    renderApiKeys();
+                    showToast('New API key generated successfully');
+                }
+            })
+            .catch(error => {
+                showToast('Failed to generate API key', 'error');
+            });
+        }
+
+        function renderApiKeys() {
+            const container = document.getElementById('apiKeyList');
+            container.innerHTML = apiKeys.map(key => `
+                <div class="api-key-item">
+                    <div class="key-info">
+                        <div class="key-name">${key.name || 'API Key'}</div>
+                        <div class="key-value">${key.value}</div>
+                    </div>
+                    <div class="key-actions">
+                        <button class="copy-btn" onclick="copyToClipboard('${key.value}')">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                        <button class="delete-btn" onclick="deleteKey('${key.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initial load of API keys
+        fetch('/api/keys')
+            .then(response => response.json())
+            .then(data => {
+                apiKeys = data.keys;
+                renderApiKeys();
+            })
+            .catch(error => {
+                showToast('Failed to load API keys', 'error');
+            });
+    </script>
+</body>
+</html> 

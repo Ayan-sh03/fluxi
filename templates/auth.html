@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxi - Login/Signup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', sans-serif;
+    }
+
+    body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.98);
+        border-radius: 24px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        width: 100%;
+        max-width: 420px;
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+        transform: translateY(-5px);
+    }
+
+    .tabs {
+        display: flex;
+        background: #f8f9fa;
+        padding: 5px;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 20px;
+        border: none;
+        background: none;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-radius: 12px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .tab-btn.active {
+        background: #fff;
+        color: #764ba2;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .tab-btn:hover:not(.active) {
+        background: rgba(118, 75, 162, 0.05);
+        color: #764ba2;
+    }
+
+    .form-container {
+        padding: 35px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 10px;
+        color: #333;
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 14px 15px;
+        padding-left: 45px; /* Space for icon */
+        border: 2px solid #eee;
+        border-radius: 12px;
+        font-size: 15px;
+        transition: all 0.3s ease;
+        background: #f8f9fa;
+        color: #333;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 15px;
+        top: 47px;
+        color: #666;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus {
+        border-color: #764ba2;
+        background: #fff;
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(118, 75, 162, 0.1);
+    }
+
+    .form-group input:focus + i {
+        color: #764ba2;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 12px;
+        color: white;
+        font-size: 16px;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(118, 75, 162, 0.2);
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(118, 75, 162, 0.3);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .form {
+        display: none;
+        animation: fadeIn 0.5s ease;
+    }
+
+    .form.active {
+        display: block;
+    }
+
+    .error-message {
+        color: #dc3545;
+        font-size: 13px;
+        margin-top: 8px;
+        display: none;
+        padding-left: 45px;
+        font-weight: 500;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Add these new utility classes */
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-4 {
+        margin-top: 16px;
+    }
+
+    .text-muted {
+        color: #6c757d;
+        font-size: 13px;
+    }
+
+    .link {
+        color: #764ba2;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .link:hover {
+        color: #667eea;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('login')">Login</button>
+            <button class="tab-btn" onclick="switchTab('signup')">Sign Up</button>
+        </div>
+        
+        <div class="form-container">
+            <!-- Login Form -->
+            <form id="loginForm" class="form active" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" required>
+                    <i class="fas fa-envelope"></i>
+                    <div class="error-message">Please enter a valid email</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" required>
+                    <i class="fas fa-lock"></i>
+                    <div class="error-message">Password is required</div>
+                </div>
+                <button type="submit" class="submit-btn">Login</button>
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Don't have an account? <a href="#" class="link" onclick="switchTab('signup')">Sign up</a>
+                    </p>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" class="form" onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label for="signupName">Full Name</label>
+                    <input type="text" id="signupName" required>
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" required>
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" required>
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="form-group">
+                    <label for="signupConfirmPassword">Confirm Password</label>
+                    <input type="password" id="signupConfirmPassword" required>
+                    <i class="fas fa-lock"></i>
+                    <div class="error-message">Passwords do not match</div>
+                </div>
+                <button type="submit" class="submit-btn">Sign Up</button>
+                <div class="text-center mt-4">
+                    <p class="text-muted">
+                        Already have an account? <a href="#" class="link" onclick="switchTab('login')">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const forms = document.querySelectorAll('.form');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            forms.forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                tabs[0].classList.add('active');
+                forms[0].classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                forms[1].classList.add('active');
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            // Add your login logic here
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            // Make API call to your Go backend
+            fetch('/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function handleSignup(e) {
+            e.preventDefault();
+            // Add your signup logic here
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                document.querySelector('#signupForm .error-message').style.display = 'block';
+                return;
+            }
+
+            // Make API call to your Go backend
+            fetch('/api/signup', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, password })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html> 
