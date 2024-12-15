@@ -3,14 +3,19 @@ package scrapper
 import (
 	"context"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
+	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
 	"os/signal"
 	"scrapper/internal/db"
 	"scrapper/internal/queue"
+	"scrapper/internal/writer"
 	"scrapper/pkg/logger"
+	"strings"
 	"sync"
 	"sync/atomic"
 	"syscall"
@@ -35,15 +40,39 @@ type Scraper struct {
 		processed  atomic.Int64
 		errors     atomic.Int64
 		maxLinks   int
-		noMoreURLs bool // New field to track if we've exhausted all URLs
+		noMoreURLs bool
 	}
-	startTime     time.Time
-	responseTimes []time.Duration
-	queue         queue.QueueManager
-	store         db.DB
+	startTime time.Time
+	queue     queue.QueueManager
+	store     db.DB
+	writer    writer.Writer
+	maxDepth  int
 }
 
-func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Scraper {
+type UrlData struct {
+	URL   string
+	Depth int
+}
+
+type Sitemap struct {
+	XMLName  xml.Name       `xml:"sitemapindex"`
+	Sitemaps []SitemapEntry `xml:"sitemap"`
+}
+
+type SitemapEntry struct {
+	Loc string `xml:"loc"`
+}
+
+type URLSet struct {
+	XMLName xml.Name `xml:"urlset"`
+	URLs    []URL    `xml:"url"`
+}
+
+type URL struct {
+	Loc string `xml:"loc"`
+}
+
+func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, maxDepth int) *Scraper {
 
 	var q queue.QueueManager
 	var err error
@@ -53,8 +82,10 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 	host := parsedURL.Host
 	path := parsedURL.Path
 
+	// !TODO: config should contain the writer and queue type, defaulting to file
+
 	// Try Redis first
-	q, err = queue.NewRedisQueue("localhost:6379", rootURL)
+	q, err = queue.NewRedisQueue("localhost:6379", rootURL, maxLinks)
 	if err != nil {
 		fmt.Printf("Redis unavailable, falling back to channel queue: %v", err)
 		q = queue.NewChannelQueue(1000)
@@ -63,11 +94,17 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 		fmt.Println("Using Redis queue")
 	}
 
+	//get webhook url from the .env
+	webhookURL := os.Getenv("WEBHOOK_URL")
+	if webhookURL == "" {
+		log.Fatal("WEBHOOK_URL not set in .env file")
+	}
+
 	return &Scraper{
 		ctx:    ctx,
 		cancel: cancel,
 		client: &http.Client{
-			Timeout: 30 * time.Second,
+			Timeout: 120 * time.Second,
 			Transport: &http.Transport{
 				MaxIdleConns:        100,
 				MaxIdleConnsPerHost: 100,
@@ -89,8 +126,39 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string) *Sc
 		}{maxLinks: maxLinks},
 		startTime: time.Now(),
 		queue:     q,
+		// writer:    writer.NewFileWriter("output"),
+		writer:   writer.NewWebhookWriter(webhookURL),
+		maxDepth: maxDepth,
 	}
 
+}
+
+//temporary functions for enqueu and dequuqu for tesing depth based scrapper using redis
+
+func (s *Scraper) enqueueUrl(url string, depth int) {
+	urlData := UrlData{
+		URL:   url,
+		Depth: depth,
+	}
+
+	urlDataJSON, err := json.Marshal(urlData)
+	if err != nil {
+		logger.Logger.Printf("Error marshaling URL data: %v", err)
+		return
+	}
+	s.queue.Enqueue(string(urlDataJSON))
+}
+
+func (s *Scraper) dequeueUrl() (*UrlData, error) {
+	urlDataJSON, err := s.queue.Dequeue()
+	if err != nil {
+		return nil, err
+	}
+	var urlData UrlData
+	if err := json.Unmarshal([]byte(urlDataJSON), &urlData); err != nil {
+		return nil, err
+	}
+	return &urlData, nil
 }
 
 func (s *Scraper) restoreFromCheckpoint() error {
@@ -173,12 +241,20 @@ func (s *Scraper) saveQueueCheckpoint() {
 }
 
 func (s *Scraper) tryIncrementProcessed() bool {
-	newCount := s.stats.processed.Add(1)
-	if newCount >= int64(s.stats.maxLinks) {
-		s.cancel() // Cancel the context when maxLinks is reached
-		return false
+	for {
+		current := s.stats.processed.Load()
+		if current >= int64(s.stats.maxLinks) {
+			return false
+		}
+		if s.stats.processed.CompareAndSwap(current, current+1) {
+			if current+1 >= int64(s.stats.maxLinks) {
+				logger.Logger.Printf("Max links reached: %d", s.stats.maxLinks)
+				s.queue.Clear()
+				s.cancel() // Cancel the context when maxLinks is reached
+			}
+			return true
+		}
 	}
-	return true
 }
 
 func (s *Scraper) worker() {
@@ -187,24 +263,45 @@ func (s *Scraper) worker() {
 	for {
 		select {
 		case <-s.ctx.Done():
+			logger.Logger.Printf("Finished job in %v seconds", time.Since(s.startTime).Seconds())
+
 			logger.Logger.Printf("Context canceled, worker exiting.")
+			s.updateJobStatus()
+			s.queue.Clear()
+
 			return
 		case <-s.shutdown:
+			logger.Logger.Printf("Finished job in %v seconds", time.Since(s.startTime).Seconds())
+
 			logger.Logger.Printf("Worker shutting down gracefully")
 			s.updateJobStatus()
 			s.queue.Clear()
 			return
 		default:
 			// Proceed with processing URLs
-			url, err := s.queue.Dequeue()
+			urlDataJSON, err := s.queue.Dequeue()
+
 			if err != nil {
 				logger.Logger.Printf("Error dequeuing URL: %v", err)
 				time.Sleep(100 * time.Millisecond)
 				continue
 			}
 
-			if url == "" {
+			if urlDataJSON == "" {
 				time.Sleep(100 * time.Millisecond)
+				continue
+			}
+			var urlData UrlData
+			if err := json.Unmarshal([]byte(urlDataJSON), &urlData); err != nil {
+				logger.Logger.Printf("Error unmarshaling URL data: %v", err)
+				continue
+			}
+
+			if urlData.Depth >= s.maxDepth {
+				logger.Logger.Printf("Max depth reached (%d). Context canceled.", s.maxDepth)
+				if s.shouldComplete() {
+					s.cancel()
+				}
 				continue
 			}
 
@@ -213,15 +310,38 @@ func (s *Scraper) worker() {
 				continue
 			}
 
-			logger.Logger.Printf("Processing URL: %s", url)
-			markdown, err := s.HtmlToMarkdown(url)
+			logger.Logger.Printf("Processing URL: %s at depth: %d", urlData.URL, urlData.Depth)
+			markdown, links, err := s.HtmlToText(urlData.URL)
 			if err != nil {
-				logger.Logger.Printf("Error processing %s: %v", url, err)
+				logger.Logger.Printf("Error processing %s: %v", urlData.URL, err)
 				s.incrementErrors()
 				continue
 			}
-			s.WriteToFile(url, markdown)
-			logger.Logger.Printf("Successfully processed URL: %s", url)
+			// fmt.Println("Found links:  ", links)
+
+			for _, link := range links {
+				logger.Logger.Printf("Processing link: %s", link)
+				// Only mark as visited after successful processing
+				newUrlData := UrlData{
+					URL:   link,
+					Depth: urlData.Depth + 1,
+				}
+				jsonData, err := json.Marshal(newUrlData)
+				if err != nil {
+					logger.Logger.Printf("Error marshaling URL data: %v", err)
+					continue
+				}
+
+				logger.Logger.Printf("Enqueuing URL: %s at depth %d", link, urlData.Depth+1)
+				if err := s.queue.Enqueue(string(jsonData)); err != nil {
+					logger.Logger.Printf("Error enqueueing URL: %v", err)
+				}
+				s.addLink(link)
+				s.visited.Store(link, true)
+			}
+
+			s.writer.Write(s.jobId, s.rootDomain, urlData.URL, markdown)
+			logger.Logger.Printf("Successfully processed URL: %s at depth: %d", urlData.URL, urlData.Depth)
 			err = s.updateScrappedUrls()
 			if err != nil {
 				logger.Logger.Printf("Error updating scrapped urls: %v", err)
@@ -229,15 +349,110 @@ func (s *Scraper) worker() {
 		}
 	}
 }
+
+func (s *Scraper) shouldComplete() bool {
+	queueLen, err := s.queue.Len()
+	if err != nil {
+		// Handle the error, maybe log it
+		return false
+	}
+	return s.stats.processed.Load() >= int64(s.stats.maxLinks) || queueLen == 0
+}
+
+func (s *Scraper) ScrapeFromSitemap(sitemapURL string) error {
+	logger.Logger.Printf("Starting sitemap scrape from: %s", sitemapURL)
+
+	// Fetch the sitemap
+	parsedURL, err := url.Parse(sitemapURL)
+	if err != nil {
+		return fmt.Errorf("failed to parse sitemap URL: %v", err)
+	}
+
+	resp, err := s.doRequestWithBackoff(&http.Request{
+		Method: "GET",
+		URL:    parsedURL,
+	})
+	if err != nil {
+		return fmt.Errorf("failed to fetch sitemap: %v", err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return fmt.Errorf("failed to read sitemap body: %v", err)
+	}
+
+	// Try parsing as sitemap index first
+	var sitemapIndex Sitemap
+	if err := xml.Unmarshal(body, &sitemapIndex); err == nil && len(sitemapIndex.Sitemaps) > 0 {
+		// Handle nested sitemaps
+		logger.Logger.Printf("Found sitemap index with %d sitemaps", len(sitemapIndex.Sitemaps))
+
+		for _, entry := range sitemapIndex.Sitemaps {
+			// Skip blog sitemaps if needed
+			if strings.Contains(entry.Loc, "blogs") {
+				continue
+			}
+
+			if err := s.processSingleSitemap(entry.Loc); err != nil {
+				logger.Logger.Printf("Error processing sitemap %s: %v", entry.Loc, err)
+			}
+		}
+	} else {
+		// Try parsing as direct URL set
+		if err := s.processSingleSitemap(sitemapURL); err != nil {
+			return fmt.Errorf("failed to process sitemap: %v", err)
+		}
+	}
+
+	return nil
+}
+
+func (s *Scraper) processSingleSitemap(sitemapURL string) error {
+	logger.Logger.Printf("Processing sitemap: %s", sitemapURL)
+
+	parsedURL, err := url.Parse(sitemapURL)
+	if err != nil {
+		return fmt.Errorf("failed to parse sitemap URL: %v", err)
+	}
+
+	resp, err := s.doRequestWithBackoff(&http.Request{
+		Method: "GET",
+		URL:    parsedURL, // Use the parsed URL instead of creating a new one
+	})
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	var urlSet URLSet
+	if err := xml.Unmarshal(body, &urlSet); err != nil {
+		return err
+	}
+
+	// Process each URL in the sitemap
+	for _, urlEntry := range urlSet.URLs {
+		// Skip if already visited
+		if _, exists := s.visited.Load(urlEntry.Loc); exists {
+			continue
+		}
+
+		// Enqueue URL for processing
+		s.enqueueUrl(urlEntry.Loc, 0)
+		logger.Logger.Printf("Enqueued URL from sitemap: %s", urlEntry.Loc)
+	}
+
+	return nil
+}
+
 func (s *Scraper) Start(startURL string) {
 	logger.Logger.Printf("Starting scraper with root URL: %s", startURL)
-
-	// if err := s.restoreFromCheckpoint(); err != nil {
-	// 	logger.Logger.Printf("Error restoring from checkpoint: %v", err)
-	// }
-
-	// // Start checkpoint saving goroutine
-	// go s.saveQueueCheckpoint()
+	s.startTime = time.Now()
 
 	// Setup signal handling
 	sigChan := make(chan os.Signal, 1)
@@ -248,12 +463,27 @@ func (s *Scraper) Start(startURL string) {
 		s.wg.Add(1)
 		go s.worker()
 	}
-	// go s.trackPerformance() // <-- Add this lin
-	// Start initial URL
-	// s.urlQueue <- startURL
-	s.queue.Enqueue(startURL)
 
-	// Wait for interrupt or completion
+	// Check if URL is a sitemap
+	if strings.HasSuffix(startURL, ".xml") || strings.Contains(startURL, "sitemap") {
+		if err := s.ScrapeFromSitemap(startURL); err != nil {
+			logger.Logger.Printf("Error processing sitemap: %v", err)
+		}
+	} else {
+		// Regular URL processing
+		initialUrlData := UrlData{
+			URL:   startURL,
+			Depth: 0,
+		}
+		jsonData, err := json.Marshal(initialUrlData)
+		if err != nil {
+			logger.Logger.Printf("Error marshaling initial URL data: %v", err)
+			return
+		}
+		s.queue.Enqueue(string(jsonData))
+	}
+
+	// Handle shutdown signal
 	go func() {
 		<-sigChan
 		logger.Logger.Println("Received shutdown signal. Gracefully shutting down...")
@@ -276,6 +506,8 @@ func (s *Scraper) doRequestWithBackoff(req *http.Request) (*http.Response, error
 	maxRetries := 6
 	baseDelay := time.Second
 	maxDelay := 64 * time.Second
+
+	fmt.Println("requesting url: ", req.URL.String())
 
 	for attempt := 0; attempt < maxRetries; attempt++ {
 		res, err := s.client.Do(req)

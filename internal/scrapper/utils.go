@@ -9,7 +9,6 @@ import (
 )
 
 func (s *Scraper) isValidURL(urlString string) bool {
-	logger.Logger.Printf("Checking URL validity for: %s", urlString)
 
 	if urlString == "" {
 		logger.Logger.Printf("Rejected: Empty URL")
@@ -27,21 +26,20 @@ func (s *Scraper) isValidURL(urlString string) bool {
 		return false
 	}
 
-	logger.Logger.Printf("URL Analysis - Root Domain: %s, Current Host: %s, Root Path: %s, Current Path: %s",
-		s.rootDomain, u.Host, s.rootPath, u.Path)
+	// logger.Logger.Printf("URL Analysis - Root Domain: %s, Current Host: %s, Root Path: %s, Current Path: %s",
+	// s.rootDomain, u.Host, s.rootPath, u.Path)
 
 	if u.Host != s.rootDomain && u.Host != "" {
-		logger.Logger.Printf("Rejected: Domain mismatch - Expected: %s, Got: %s", s.rootDomain, u.Host)
+		// logger.Logger.Printf("Rejected: Domain mismatch - Expected: %s, Got: %s", s.rootDomain, u.Host)
 		return false
 	}
 
 	if s.rootPath != "" && s.rootPath != "/" {
 		hasPrefix := strings.HasPrefix(u.Path, s.rootPath)
-		logger.Logger.Printf("Path check - Required Prefix: %s, Has Prefix: %v", s.rootPath, hasPrefix)
+		// logger.Logger.Printf("Path check - Required Prefix: %s, Has Prefix: %v", s.rootPath, hasPrefix)
 		return hasPrefix
 	}
 
-	logger.Logger.Printf("Accepted: URL passed all validation checks")
 	return u.Host == s.rootDomain || u.Host == ""
 }
 
