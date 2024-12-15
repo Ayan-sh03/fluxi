@@ -8,6 +8,7 @@ services:
     depends_on:
       - db
     environment:
+      - WEBHOOK_URL=${WEBHOOK_URL}
       - DATABASE_URL=postgres://ayan:pgsql123@db:5432/postgres?sslmode=disable
     networks:
       - app-network

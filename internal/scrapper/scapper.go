@@ -6,6 +6,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -93,6 +94,12 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, max
 		fmt.Println("Using Redis queue")
 	}
 
+	//get webhook url from the .env
+	webhookURL := os.Getenv("WEBHOOK_URL")
+	if webhookURL == "" {
+		log.Fatal("WEBHOOK_URL not set in .env file")
+	}
+
 	return &Scraper{
 		ctx:    ctx,
 		cancel: cancel,
@@ -120,7 +127,7 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, max
 		startTime: time.Now(),
 		queue:     q,
 		// writer:    writer.NewFileWriter("output"),
-		writer:   writer.NewWebhookWriter("http://127.0.0.1:5000"),
+		writer:   writer.NewWebhookWriter(webhookURL),
 		maxDepth: maxDepth,
 	}
 
