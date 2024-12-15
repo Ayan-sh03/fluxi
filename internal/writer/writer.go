@@ -1,8 +1,7 @@
 package writer
 
 type Writer interface {
-	Write(url, data string) error
+	Write(jobId, rootUrl, url, data string) error
 }
-
 
 type WriterImpl struct{}

@@ -5,50 +5,99 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
-	"os"
-	"scrapper/pkg/logger"
+	"time"
+
+	"math/rand"
 )
 
-type Body struct {
-	URL   string `json:"url"`
-	Data  string `json:"data"`
-	Error error  `json:"error"`
+type WebhookWriter struct {
+	WebhookURL string
+	client     *http.Client
+	maxRetries int
 }
 
-func (w *WriterImpl) Write(url, data string) error {
-	//get webhook url from env
-	webhookUrl := os.Getenv("WEBHOOK_URL")
-	if webhookUrl == "" {
-		return fmt.Errorf("WEBHOOK_URL not set")
+type Body struct {
+	JobId   string `json:"job_id"`
+	RootUrl string `json:"root_url"`
+	Url     string `json:"url"`
+	Data    string `json:"data"`
+}
+
+func NewWebhookWriter(webhookURL string) *WebhookWriter {
+	return &WebhookWriter{
+		WebhookURL: webhookURL,
+		maxRetries: 3,
+		client: &http.Client{
+			Timeout: 30 * time.Second,
+			Transport: &http.Transport{
+				MaxIdleConns:      10,
+				IdleConnTimeout:   30 * time.Second,
+				DisableKeepAlives: false,
+			},
+		},
 	}
-	//create http client
+}
 
-	client := &http.Client{}
-	//create request
-	req, err := http.NewRequest("POST", webhookUrl, nil)
-
-	if err != nil {
-		return err
+func (w *WebhookWriter) Write(jobId, rootUrl, url, data string) error {
+	body := Body{
+		JobId:   jobId,
+		RootUrl: rootUrl,
+		Url:     url,
+		Data:    data,
 	}
+	log.Printf("Starting webhook write for job %s to %s", jobId, url)
+	defer log.Printf("Completed webhook write for job %s", jobId)
 
-	//set headers
-	req.Header.Set("Content-Type", "application/json")
-
-	body := struct{ URL, Data string }{url, data}
-
-	//convert data to json
 	jsonData, err := json.Marshal(body)
 	if err != nil {
-		return err
+		return fmt.Errorf("marshal error: %v", err)
 	}
 
-	req.Body = io.NopCloser(bytes.NewBuffer(jsonData))
+	var lastErr error
+	for attempt := 0; attempt <= w.maxRetries; attempt++ {
+		if attempt > 0 {
+			// Exponential backoff with jitter to prevent thundering herd
+			backoff := time.Duration(attempt) * time.Second
+			jitter := time.Duration(rand.Int63n(1000)) * time.Millisecond
+			time.Sleep(backoff + jitter)
+		}
+		err = w.doRequest(jsonData)
+		if err == nil {
+			return nil
+		}
+		lastErr = err
+	}
 
-	//send req
-	res, err := client.Do(req)
+	return fmt.Errorf("failed after %d attempts, last error: %v", w.maxRetries, lastErr)
+}
 
-	logger.Logger.Println("Response Status:", res.Status)
+func (w *WebhookWriter) doRequest(jsonData []byte) error {
+	req, err := http.NewRequest(http.MethodPost, w.WebhookURL, bytes.NewBuffer(jsonData))
+	if err != nil {
+		return fmt.Errorf("request creation error: %v", err)
+	}
 
-	return err
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("User-Agent", "Scraper-Webhook-Client/1.0")
+
+	resp, err := w.client.Do(req)
+	if err != nil {
+		return fmt.Errorf("request failed: %v", err)
+	}
+	defer resp.Body.Close()
+
+	// Read and discard response body to reuse connection
+	_, err = io.Copy(io.Discard, resp.Body)
+	if err != nil {
+		return fmt.Errorf("error reading response body: %v", err)
+	}
+
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+
+	return nil
 }
