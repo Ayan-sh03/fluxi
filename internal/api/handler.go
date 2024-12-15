@@ -65,7 +65,7 @@ type FullScrapeRequest struct {
 // @Failure 500 {object} ErrorResponse
 // @Router /scrape [post]
 // @Security ApiKeyAuth
-func handleSingleURLScrape(c *gin.Context) {
+func HandleSingleURLScrape(c *gin.Context) {
 	var req struct {
 		URL        string `json:"url" binding:"required"`
 		WebhookURL string `json:"webhookUrl"`
@@ -116,7 +116,7 @@ func handleSingleURLScrape(c *gin.Context) {
 // @Failure 500 {object} ErrorResponse
 // @Router /scrape/full [post]
 // @Security ApiKeyAuth
-func handleFullScrape(c *gin.Context) {
+func HandleFullScrape(c *gin.Context) {
 	var req struct {
 		RootURL     string `json:"rootUrl" binding:"required"`
 		MaxURLs     int    `json:"maxUrls"`
@@ -199,4 +199,23 @@ func GetJobStatus(c *gin.Context) {
 	}
 	c.JSON(200, scrappedUrl)
 
+}
+
+// @Summary Generate API key
+// @Description Generates a new API key for the user
+// @Tags API Keys
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.APIKey
+// @Failure 500 {object} ErrorResponse
+// @Router /api-key [post]
+// @Security ApiKeyAuth
+func HandleGenerateAPIKey(c *gin.Context) {
+	apiKey := models.NewAPIKey(uuid.MustParse(c.GetString("user_id")), "test")
+	err := db.Db.CreateAPIKey(apiKey)
+	if err != nil {
+		c.JSON(500, gin.H{"error": "Failed to generate API key"})
+		return
+	}
+	c.JSON(200, apiKey)
 }

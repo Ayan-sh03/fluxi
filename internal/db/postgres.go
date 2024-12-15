@@ -131,3 +131,93 @@ func (p *PostgreSQL) UpdateUrls(jobId string, urls []byte) error {
 		string(urls), jobId)
 	return err
 }
+
+func (db *PostgreSQL) CreateUser(user *models.User) error {
+	query := `
+        INSERT INTO users (id, name, email, password_hash, created_at, updated_at)
+        VALUES ($1, $2, $3, $4, $5, $6)
+    `
+	_, err := db.pool.Exec(context.Background(), query,
+		user.ID, user.Name, user.Email, user.PasswordHash,
+		user.CreatedAt, user.UpdatedAt)
+	return err
+}
+
+func (db *PostgreSQL) GetUserByEmail(email string) (*models.User, error) {
+	var user models.User
+	query := `
+        SELECT id, name, email, password_hash, created_at, updated_at
+        FROM users WHERE email = $1
+    `
+	err := db.pool.QueryRow(context.Background(), query, email).Scan(
+		&user.ID, &user.Name, &user.Email, &user.PasswordHash,
+		&user.CreatedAt, &user.UpdatedAt)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}
+
+func (db *PostgreSQL) UserExistsByEmail(email string) (bool, error) {
+	var exists bool
+	query := `SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)`
+	err := db.pool.QueryRow(context.Background(), query, email).Scan(&exists)
+	return exists, err
+}
+
+func (db *PostgreSQL) GetAPIKeysByUserID(userId string) ([]models.APIKey, error) {
+	var apiKeys []models.APIKey
+
+	query := `
+        SELECT id, user_id, api_key, created_at, last_used_at, is_active 
+        FROM api_keys 
+        WHERE user_id = $1
+    `
+
+	rows, err := db.pool.Query(context.Background(), query, userId)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var apiKey models.APIKey
+		err := rows.Scan(
+			&apiKey.ID,
+			&apiKey.UserID,
+			&apiKey.KeyValue,
+			&apiKey.CreatedAt,
+			&apiKey.LastUsedAt,
+			&apiKey.IsActive,
+		)
+		if err != nil {
+			return nil, err
+		}
+		apiKeys = append(apiKeys, apiKey)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return apiKeys, nil
+}
+func (db *PostgreSQL) CreateAPIKey(apiKey *models.APIKey) error {
+	query := `INSERT INTO api_keys (id, user_id, key_value, created_at, last_used_at, is_active) VALUES ($1, $2, $3, $4, $5, $6)`
+	_, err := db.pool.Exec(context.Background(), query,
+		apiKey.ID, apiKey.UserID, apiKey.KeyValue, apiKey.CreatedAt, apiKey.LastUsedAt, apiKey.IsActive)
+	return err
+}
+
+func (db *PostgreSQL) UpdateAPIKeyLastUsedAt(apiKeyID string) error {
+	query := `UPDATE api_keys SET last_used_at = CURRENT_TIMESTAMP WHERE id = $1`
+	_, err := db.pool.Exec(context.Background(), query, apiKeyID)
+	return err
+}
+
+func (db *PostgreSQL) CheckAPIKeyExists(apiKey string, userId string) (bool, error) {
+	query := `SELECT EXISTS(SELECT 1 FROM api_keys WHERE key_value = $1 AND is_active = true AND user_id = $2)`
+	var exists bool
+	err := db.pool.QueryRow(context.Background(), query, apiKey, userId).Scan(&exists)
+	return exists, err
+}

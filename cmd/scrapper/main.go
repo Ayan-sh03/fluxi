@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	"scrapper/internal/api"
+	api "scrapper/internal"
 	"scrapper/internal/db"
 	"scrapper/pkg/logger"
 
