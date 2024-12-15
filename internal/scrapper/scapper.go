@@ -6,7 +6,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -72,7 +71,7 @@ type URL struct {
 	Loc string `xml:"loc"`
 }
 
-func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, maxDepth int) *Scraper {
+func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, maxDepth int, webhookURL string) *Scraper {
 
 	var q queue.QueueManager
 	var err error
@@ -92,12 +91,6 @@ func NewScraper(concurrency int, rootURL string, maxLinks int, jobId string, max
 		fmt.Println("Using channel queue")
 	} else {
 		fmt.Println("Using Redis queue")
-	}
-
-	//get webhook url from the .env
-	webhookURL := os.Getenv("WEBHOOK_URL")
-	if webhookURL == "" {
-		log.Fatal("WEBHOOK_URL not set in .env file")
 	}
 
 	return &Scraper{

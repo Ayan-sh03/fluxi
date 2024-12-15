@@ -28,7 +28,8 @@ import (
 //	500: errorResponse
 func handleSingleURLScrape(c *gin.Context) {
 	var req struct {
-		URL string `json:"url" binding:"required"`
+		URL        string `json:"url" binding:"required"`
+		WebhookURL string `json:"webhookUrl"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -45,7 +46,7 @@ func handleSingleURLScrape(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	scraper := scrapper.NewScraper(1, req.URL, 1, scrappedUrl.JobId, 0)
+	scraper := scrapper.NewScraper(1, req.URL, 1, scrappedUrl.JobId, 0, req.WebhookURL)
 	start := time.Now()
 	markdown, _, err := scraper.HtmlToText(req.URL)
 
@@ -77,10 +78,16 @@ func handleFullScrape(c *gin.Context) {
 		MaxURLs     int    `json:"maxUrls"`
 		Concurrency int    `json:"concurrency"`
 		MaxDepth    int    `json:"maxDepth"`
+		WebhookURL  string `json:"webhookUrl"`
 	}
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"error": "rootUrl is required in request body"})
+		return
+	}
+
+	if req.WebhookURL == "" {
+		c.JSON(400, gin.H{"error": "webhookUrl is required in request body"})
 		return
 	}
 
@@ -106,7 +113,7 @@ func handleFullScrape(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	scraper := scrapper.NewScraper(req.Concurrency, req.RootURL, req.MaxURLs, jobId, req.MaxDepth)
+	scraper := scrapper.NewScraper(req.Concurrency, req.RootURL, req.MaxURLs, jobId, req.MaxDepth, req.WebhookURL)
 
 	go func() {
 		scraper.Start(req.RootURL)
