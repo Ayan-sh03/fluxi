@@ -19,13 +19,52 @@ import (
 	"github.com/google/uuid"
 )
 
-// swagger:route POST /scrape/single scraping singleScrape
-// Scrapes a single URL and converts to markdown.
-// responses:
-//
-//	200: singleScrapeResponse
-//	400: errorResponse
-//	500: errorResponse
+// SingleScrapeRequest represents the request body for single URL scraping
+type SingleScrapeRequest struct {
+	URL        string `json:"url" binding:"required"`
+	WebhookURL string `json:"webhookUrl"`
+}
+
+// ScrapeResponse represents the response for a scrape request
+type ScrapeResponse struct {
+	Status     string `json:"status"`
+	URL        string `json:"url"`
+	OutputFile string `json:"output_file"`
+}
+
+// ErrorResponse represents an error response
+type ErrorResponse struct {
+	Error string `json:"error"`
+}
+
+type FullScrapeResponse struct {
+	Status      string `json:"status"`
+	JobId       string `json:"job_id"`
+	RootURL     string `json:"root_url"`
+	MaxURLs     int    `json:"max_urls"`
+	Concurrency int    `json:"concurrency"`
+}
+
+// FullScrapeRequest represents the request body for full website scraping
+type FullScrapeRequest struct {
+	RootURL     string `json:"rootUrl" binding:"required"`
+	MaxURLs     int    `json:"maxUrls"`
+	Concurrency int    `json:"concurrency"`
+	MaxDepth    int    `json:"maxDepth"`
+	WebhookURL  string `json:"webhookUrl"`
+}
+
+// @Summary Scrape single URL
+// @Description Scrapes a single URL and converts its content to markdown
+// @Tags scraping
+// @Accept json
+// @Produce json
+// @Param request body SingleScrapeRequest true "Scrape request parameters"
+// @Success 200 {object} ScrapeResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /scrape [post]
+// @Security ApiKeyAuth
 func handleSingleURLScrape(c *gin.Context) {
 	var req struct {
 		URL        string `json:"url" binding:"required"`
@@ -66,12 +105,17 @@ func handleSingleURLScrape(c *gin.Context) {
 	})
 }
 
-// swagger:route POST /scrape/full scraping fullScrape
-// Performs full recursive website scraping.
-// responses:
-//
-//	200: fullScrapeResponse
-//	400: errorResponse
+// @Summary Scrape full website
+// @Description Scrapes a website recursively starting from a root URL
+// @Tags scraping
+// @Accept json
+// @Produce json
+// @Param request body api.FullScrapeRequest true "Full scrape request parameters"
+// @Success 200 {object} FullScrapeResponse
+// @Failure 400 {object} ErrorResponse
+// @Failure 500 {object} ErrorResponse
+// @Router /scrape/full [post]
+// @Security ApiKeyAuth
 func handleFullScrape(c *gin.Context) {
 	var req struct {
 		RootURL     string `json:"rootUrl" binding:"required"`
@@ -128,13 +172,17 @@ func handleFullScrape(c *gin.Context) {
 	})
 }
 
-// swagger:route GET /job/status jobs getStatus
-// Get job status by ID.
-// responses:
-//
-//	200: jobStatusResponse
-//	400: errorResponse
-//	404: errorResponse
+// @Summary Get job status
+// @Description Retrieves the current status of a scraping job
+// @Tags Jobs
+// @Accept json
+// @Produce json
+// @Param jobId query string true "Job ID" Format(uuid)
+// @Success 200 {object} models.ScrappedUrl
+// @Failure 400 {object} ErrorResponse
+// @Failure 404 {object} ErrorResponse
+// @Router /scrape/status [get]
+// @Security ApiKeyAuth
 func GetJobStatus(c *gin.Context) {
 	jobId := c.Query("jobId")
 	if jobId == "" {

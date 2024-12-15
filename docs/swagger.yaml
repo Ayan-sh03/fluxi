@@ -1,0 +1,180 @@
+basePath: /api/v1
+definitions:
+  api.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  api.FullScrapeRequest:
+    properties:
+      concurrency:
+        type: integer
+      maxDepth:
+        type: integer
+      maxUrls:
+        type: integer
+      rootUrl:
+        type: string
+      webhookUrl:
+        type: string
+    required:
+    - rootUrl
+    type: object
+  api.FullScrapeResponse:
+    properties:
+      concurrency:
+        type: integer
+      job_id:
+        type: string
+      max_urls:
+        type: integer
+      root_url:
+        type: string
+      status:
+        type: string
+    type: object
+  api.ScrapeResponse:
+    properties:
+      output_file:
+        type: string
+      status:
+        type: string
+      url:
+        type: string
+    type: object
+  api.SingleScrapeRequest:
+    properties:
+      url:
+        type: string
+      webhookUrl:
+        type: string
+    required:
+    - url
+    type: object
+  models.ScrappedUrl:
+    properties:
+      job_id:
+        type: string
+      scrapped_urls:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+    type: object
+host: localhost:8000
+info:
+  contact:
+    email: support@fluxi.com
+    name: API Support
+    url: http://www.swagger.io/support
+  description: A powerful and scalable web scraping API service.
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  termsOfService: http://swagger.io/terms/
+  title: Fluxi Web Scraper API
+  version: "1.0"
+paths:
+  /scrape:
+    post:
+      consumes:
+      - application/json
+      description: Scrapes a single URL and converts its content to markdown
+      parameters:
+      - description: Scrape request parameters
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.SingleScrapeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.ScrapeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Scrape single URL
+      tags:
+      - scraping
+  /scrape/full:
+    post:
+      consumes:
+      - application/json
+      description: Scrapes a website recursively starting from a root URL
+      parameters:
+      - description: Full scrape request parameters
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/api.FullScrapeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/api.FullScrapeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Scrape full website
+      tags:
+      - scraping
+  /scrape/status:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the current status of a scraping job
+      parameters:
+      - description: Job ID
+        format: uuid
+        in: query
+        name: jobId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ScrappedUrl'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get job status
+      tags:
+      - Jobs
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: X-API-Key
+    type: apiKey
+swagger: "2.0"
